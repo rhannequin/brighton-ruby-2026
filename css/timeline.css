@@ -1,0 +1,176 @@
+/* Timeline component — non-linear date scale (3000 BCE → today).
+   Position is computed by js/timeline.js from `data-year` attributes.
+   Anchor points (in JS) compress ancient eras and stretch modern ones,
+   so the dense cluster of post-1500 events stays legible. */
+
+.timeline-slide .timeline-title {
+  text-align: center;
+  font-size: 0.55em;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 2em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.timeline {
+  position: relative;
+  width: 92%;
+  margin: 4em auto;
+}
+
+.timeline-axis {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.55) 4%,
+    rgba(255, 255, 255, 0.55) 96%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* --- Era ticks: small dim labels just below the axis --- */
+.timeline-era {
+  position: absolute;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 0.55em;
+  font-size: 0.32em;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.timeline-era::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 0.45em;
+  background: rgba(255, 255, 255, 0.3);
+  margin-bottom: 0.18em;
+}
+
+/* --- Event marker: a point on the axis --- */
+.timeline-event {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+.timeline-event .dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.42em;
+  height: 0.42em;
+  margin: -0.21em 0 0 -0.21em;
+  background: #ffd43b;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #111;
+  z-index: 2;
+}
+
+.timeline-event .info {
+  position: absolute;
+  left: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 8em;
+  line-height: 1.3;
+}
+
+.timeline-event .year {
+  display: block;
+  font-size: 0.36em;
+  color: rgba(255, 255, 255, 0.55);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.15em;
+  white-space: nowrap;
+}
+
+.timeline-event .label {
+  display: block;
+  font-size: 0.5em;
+  color: #fff;
+  font-weight: 400;
+}
+
+/* Top: label sits above the axis with a short leader down to the dot */
+.timeline-event--top .info {
+  bottom: 0.85em;
+}
+
+.timeline-event--top .info::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 0.6em;
+  background: rgba(255, 255, 255, 0.35);
+  margin-top: 0.15em;
+}
+
+/* Bottom: label sits well below the era zone with a longer leader */
+.timeline-event--bottom .info {
+  top: 2.4em;
+}
+
+.timeline-event--bottom .info::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 2.1em;
+  background: rgba(255, 255, 255, 0.35);
+  margin-bottom: 0.15em;
+}
+
+/* Edge alignment: events near year=-3000 / 2026 would otherwise center
+   their labels off the slide. --align-left makes the label extend
+   rightward from the dot; --align-right makes it extend leftward. */
+.timeline-event--align-left .info {
+  transform: translateX(0);
+  text-align: left;
+}
+
+.timeline-event--align-left .info::before,
+.timeline-event--align-left .info::after {
+  left: 0;
+  transform: none;
+}
+
+.timeline-event--align-right .info {
+  transform: translateX(-100%);
+  text-align: right;
+}
+
+.timeline-event--align-right .info::before,
+.timeline-event--align-right .info::after {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+/* Newly-introduced event on a slide: brighter dot + accent label.
+   Add `timeline-event--new` only on the slide where it first appears. */
+.timeline-event--new .dot {
+  background: #fff;
+  box-shadow: 0 0 0 4px #111, 0 0 12px rgba(255, 212, 59, 0.7);
+}
+
+.timeline-event--new .label {
+  color: #ffd43b;
+}
