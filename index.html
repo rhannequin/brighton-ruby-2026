@@ -12,7 +12,7 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <!-- <section>
+        <section>
           <p>October 4, 1582 → ?</p>
           <aside class="notes">
             <p>
@@ -78,7 +78,7 @@
             </p>
           </aside>
         </section>
-        <section>
+        <!--<section>
           <p>1 day</p>
           <aside class="notes">
             <p>
@@ -135,7 +135,7 @@
               what you think it is.
             </p>
           </aside>
-        </section>
+        </section>-->
         <section>
           <p>@rhannequin</p>
           <p>
@@ -186,7 +186,7 @@
             </span>
           </p>
         </section>
-        <section>
+        <!--<section>
           <h2>Agenda</h2>
         </section>
         <section>
@@ -604,6 +604,7 @@
           </p>
         </section>
         <section>
+          <h3>Truth #1</h3>
           <pre><code class="language-ruby">
           t + 1.day
           # => Mon, 26 Oct 2026 00:30:00 GMT +00:00
@@ -620,7 +621,7 @@
           </aside>
         </section>
         <section>
-          <h3>Lie #2: The calendar is stable</h3>
+          <h3>Lie #2a: The calendar is stable</h3>
         </section>
         <section>
           <p>
@@ -647,8 +648,13 @@
           </aside>
         </section>
         <section>
-          <p>Calendars change.</p>
-          <p>Time zones change.</p>
+          <h3>Lie #2b: Your zone data is current</h3>
+          <aside class="notes">
+            <p>
+              Calendars changed centuries ago. Zone rules are changing in
+              our lifetime. Same shape of problem, just faster.
+            </p>
+          </aside>
         </section>
         <section>
           <pre><code>
@@ -702,6 +708,7 @@
           </aside>
         </section>
         <section>
+          <h3>Truth #2b</h3>
           <pre><code>
             $ bundle update tzinfo
           </code></pre>
@@ -765,6 +772,24 @@
           </aside>
         </section>
         <section>
+          <h3>Truth #3</h3>
+          <p>Store IANA names.</p>
+          <p>Avoid Rails names</p>
+          <aside class="notes">
+            <p>
+              If you need more context than just a point in time, you might want
+              to store not only the time but also the time zones.
+            </p>
+            <p>
+              In this case, you should store the IANA name of the time zone, not
+              the Rails name, because the Rails name is not stable. It can be
+              changed by the Rails team, and it has been changed in the past.
+              The IANA name is stable, and it's the one that is used by the
+              tzinfo gem, which is the one that Rails uses under the hood.
+            </p>
+          </aside>
+        </section>
+        <section>
           <h3>Lie #4: `Time.now` gives current time</h3>
         </section>
         <section>
@@ -782,6 +807,7 @@
             </p>
         </section>
         <section>
+          <h3>Truth #4</h3>
           <p>
             <code>Time.current</code>
           </p>
@@ -790,7 +816,7 @@
           </p>
         </section>
         <section>
-          <h3>Lie #5: `Time.parse` is reliable</h3>
+          <h3>Lie #5: <code>Time.parse</code> is reliable</h3>
         </section>
         <section>
           <pre><code class="language-ruby">
@@ -807,6 +833,7 @@
           </aside>
         </section>
         <section>
+          <h3>Truth #5</h3>
           <pre><code class="language-ruby">
             Time.zone.parse("2026-03-29 09:00:00")
             # => 2026-03-29 09:00:00 UTC
@@ -822,10 +849,289 @@
           <h3>Lie #6: 1:30 AM happens once</h3>
         </section>
         <section>
+          <p>TODO: some kind of picture</p>
+          <aside class="notes">
+            <p>
+              Daylight saving time was originally an industrial scheduling
+              experiment. It became universal during World War One, then mostly
+              stayed. Most countries that observe it move clocks by one hour,
+              twice a year. And as you may know, each of those moves does
+              something terrible to your code.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            tz = TZInfo::Timezone.get("Europe/London")
+
+            ghost = Time.new(2026, 3, 29, 1, 30, 0)
+          </code></pre>
+          <aside class="notes">
+            <p>
+              I don't know if you have seen a ghost before, but you're about to
+              see one.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            tz.local_to_utc(ghost)
+          </code></pre>
+          <aside class="notes">
+            <p>
+              That time never happened. Anywhere. To anyone. If you store it,
+              you have stored a lie.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language_ruby">
+            # => TZInfo::PeriodNotFound
+          </code></pre>
+          <aside class="notes">
+            <p>
+              And actually the code doesn't even work, you'll get a
+              <code>TZInfo::PeriodNotFound</code> error.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            tz = TZInfo::Timezone.get("Europe/London")
+
+            ghost = Time.new(2026, 10, 25, 1, 30, 0)
+          </code></pre>
+          <aside class="notes">
+            <p>
+              I am generous, today'll see a second ghost, or actually
+              something that looks like a ghost but is actually a clone.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            tz.local_to_utc(ghost)
+
+            # => TZInfo::AmbiguousTime
+          </code></pre>
+          <aside class="notes">
+            <p>
+              When the clocks go back, the same local time happens twice. If
+              you try to convert it to UTC, you get an error because it's
+              ambiguous. You have to choose which one you mean.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            Time.zone.parse("2026-03-29 01:30:00")
+            # => Sun, 29 Mar 2026 02:30:00 BST +01:00
+
+            Time.zone.parse("2026-10-25 01:30:00")
+            # => Sun, 25 Oct 2026 01:30:00 BST +01:00
+          </code></pre>
+          <aside class="notes">
+            <p>
+              That's not even the worst of it. If you use
+              <code>Time.zone.parse</code>, it will pick one of the two times
+              for you, without raising anything, hoping the right one is picked.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <h3>Truth #6</h3>
+          <p>
+            When parsing user input,
+            <br>
+            use <code>TZInfo::Timezone#local_to_utc</code>
+            <br>
+            and rescue both errors.
+          </p>
+          <aside class="notes">
+            <p>
+              The fix to this problem is to use the timezone's
+              <code>local_to_utc</code> method, which will raise an error if the
+              time is invalid or ambiguous.
+            </p>
+            <p>
+              Okay, I know this is quite unlikely to happen, but keep in mind
+              the time zone rules are changing all the time, you can never know
+              what weird edge case your app will need to support in the
+              future.
+            </p>
+          </aside>
+        </section>
+        <section>
           <h3>Lie #7: JSON and the database preserve your time</h3>
         </section>
         <section>
+          <pre><code class="language-ruby">
+            Time.zone.parse("2026-06-25 09:00:00+01:00").to_json
+          </code></pre>
+          <aside class="notes">
+            <p>
+              At this point, you might be feeling safe, you're using
+              <code>zone</code>, the string includes the offset, and you the
+              time and date are pretty far to the scary ones we've seen so far.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            Time.zone.parse("2026-06-25 09:00:00+01:00").to_json
+
+            # => "2026-06-25T08:00:00.000Z"
+          </code></pre>
+          <aside class="notes">
+            <p>
+              And yes, it's true, nothing broke, nothing raised, this created
+              a perfectly valid JSON string of a perfectly valid time.
+            </p>
+            <p>
+              But you lost a valuable information in the process, the offset.
+              The time is now in UTC, and you have no way to know it was
+              originally in BST.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <h3>Truth #7</h3>
+          <p>
+            Outside Ruby object, don't forget the zone.
+          </p>
+          <aside class="notes">
+            <p>
+              Once you leave Ruby for serialization or storage, remember the
+              zone won't follow you. If you need it, make sure to include it.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>Database warning</p>
+          <p>PostgreSQL: <code>timestamptz</code></p>
+          <p>MySQL: <code>datetime</code></p>
+          <p>SQLite: no datetime type</p>
+          <p></p>
+          <aside class="notes">
+            <p>
+              If you need to store the time and keep the zone, you'll need to
+              store them separately.
+            </p>
+            <p>
+              PotgreSQL has a <code>timestamptz</code> type that stores the time
+              in UTC and the offset, but it doesn't store the IANA name of the
+              time zone.
+            </p>
+            <p>
+              MySQL's <code>datetime</code> type doesn't store the time zone at
+              all.
+            </p>
+            <p>
+              SQLite doesn't have a datetime type, so you have to store it as a
+              string or an integer, and you have to handle the time zone
+              yourself.
+            </p>
+          </aside>
+        </section>
+        <section>
           <h3>Lie #8: A minute is 60 seconds</h3>
+        </section>
+        <section>
+          <p>
+            TODO: picture of the Moon and the Earth
+          </p>
+          <aside class="notes">
+            <p>
+              Earth's rotation is slowing down. The Moon pulls on our oceans,
+              the friction acts like a brake, and over centuries the day gets
+              longer. But do you know how it impacts you?
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>TAI</p>
+          <p>International Atomic Time</p>
+          <aside class="notes">
+            <p>
+              Today, the definition of the second is not based on the Earth's
+              rotation anymore, but on the vibrations of a cesium atom. This is
+              called TAI, or International Atomic Time, and it's a continuous
+              time scale.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>UTC</p>
+          <p>Coordinated Universal Time</p>
+          <aside class="notes">
+            <p>
+              But you and me, we use UTC, which is a time scale that is based on
+              TAI but has leap seconds added to keep it in sync with the Earth's
+              rotation.
+            </p>
+            <p>
+              Yes, you might have heard about leap seconds, but they exist. And
+              we add or subtract them as needed, which is usually every few
+              years. The last one was added in December 2016, and none have
+              been added since.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>TAI - UTC = 37 seconds</p>
+          <aside class="notes">
+            <p>
+              As of today, TAI is 37 seconds ahead of UTC.
+            </p>
+            <p>
+              This means, there are some cases where a minute is not 60 seconds.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <table>
+            <thead>
+              <tr>
+                <th>UTC</th>
+                <th>TAI</th>
+                <th>UNIX timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016-12-31 23:59:59</td>
+                <td>2017-01-01 00:00:35</td>
+                <td>1483228799</td>
+              </tr>
+              <tr>
+                <td>2016-12-31 23:59:60</td>
+                <td>2017-01-01 00:00:36</td>
+                <td>1483228799</td>
+              </tr>
+              <tr>
+                <td>2017-01-01 00:00:00</td>
+                <td>2017-01-01 00:00:37</td>
+                <td>1483228800</td>
+              </tr>
+            </tbody>
+          </table>
+          <aside class="notes">
+            <p>
+              There's a lot to say there. First, as we said, TAI is continuous,
+              so it doesn't have a leap second.
+            </p>
+            <p>
+              UTC has a leap second, so it has a 23:59:60. This is a valid time
+              in UTC.
+            </p>
+            <p>
+              UNIX timestamps count seconds since 1970-01-01 UTC but ignore
+              leap seconds, so they don't represent them. This means that the
+              same UNIX timestamp can correspond to two different UTC times,
+              which is a problem if you're using UNIX timestamps to store
+              time.
+            </p>
+          </aside>
         </section>
         <section>
           <h3>Toolkit</h3>
@@ -835,227 +1141,6 @@
           <!-- Scheduling?  Store user intent. Compute the instant. -->
           <!-- Testing?     travel_to an evil date. -->
         </section>
-
-        <!--
-        <section data-auto-animate class="timeline-slide">
-          <p class="timeline-title" data-id="tl-title">A brief history of timekeeping</p>
-          <div class="timeline" data-id="tl">
-            <div class="timeline-axis" data-id="tl-axis"></div>
-            <span class="timeline-era" data-id="era-3000" data-year="-3000">3000 BCE</span>
-            <span class="timeline-era" data-id="era+2026" data-year="2026">2026</span>
-          </div>
-        </section>
-        <section data-auto-animate class="timeline-slide">
-          <p class="timeline-title" data-id="tl-title">A brief history of timekeeping</p>
-          <div class="timeline" data-id="tl">
-            <div class="timeline-axis" data-id="tl-axis"></div>
-            <span class="timeline-era" data-id="era-3000" data-year="-3000">3000 BCE</span>
-            <span class="timeline-era" data-id="era+2026" data-year="2026">2026</span>
-
-            <div class="timeline-event timeline-event--top timeline-event--align-left timeline-event--new"
-                 data-id="ev-sumerian" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Sumerian lunisolar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--align-left timeline-event--new"
-                 data-id="ev-egypt-solar" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Ancient Egypt solar calendar</span>
-              </span>
-            </div>
-          </div>
-        </section>
-        <section data-auto-animate class="timeline-slide">
-          <p class="timeline-title" data-id="tl-title">A brief history of timekeeping</p>
-          <div class="timeline" data-id="tl">
-            <div class="timeline-axis" data-id="tl-axis"></div>
-            <span class="timeline-era" data-id="era-3000" data-year="-3000">3000 BCE</span>
-            <span class="timeline-era" data-id="era+2026" data-year="2026">2026</span>
-
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-sumerian" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Sumerian lunisolar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--align-left"
-                 data-id="ev-egypt-solar" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Ancient Egypt solar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--top timeline-event--align-left timeline-event--new"
-                 data-id="ev-egypt-hours" data-year="-2100">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~2100 BCE</span>
-                <span class="label">Ancient Egypt hours in days</span>
-              </span>
-            </div>
-          </div>
-        </section>
-        <section>
-          <aside class="notes">
-            <p>Talking time before introducing the Babylonians and the 360°
-            celestial circle. Mention base-60, sky observation, the link to
-            our 60-second / 60-minute / 360° system.</p>
-          </aside>
-        </section>
-        <section data-auto-animate class="timeline-slide">
-          <p class="timeline-title" data-id="tl-title">A brief history of timekeeping</p>
-          <div class="timeline" data-id="tl">
-            <div class="timeline-axis" data-id="tl-axis"></div>
-            <span class="timeline-era" data-id="era-3000" data-year="-3000">3000 BCE</span>
-            <span class="timeline-era" data-id="era+2026" data-year="2026">2026</span>
-
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-sumerian" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Sumerian lunisolar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--align-left"
-                 data-id="ev-egypt-solar" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Ancient Egypt solar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-egypt-hours" data-year="-2100">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~2100 BCE</span>
-                <span class="label">Ancient Egypt hours in days</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--new"
-                 data-id="ev-babylonians" data-year="-300">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~300 BCE</span>
-                <span class="label">Babylonians 360° celestial circle</span>
-              </span>
-            </div>
-          </div>
-        </section>
-        <section data-auto-animate class="timeline-slide">
-          <p class="timeline-title" data-id="tl-title">A brief history of timekeeping</p>
-          <div class="timeline" data-id="tl">
-            <div class="timeline-axis" data-id="tl-axis"></div>
-            <span class="timeline-era" data-id="era-3000" data-year="-3000">3000 BCE</span>
-            <span class="timeline-era" data-id="era+2026" data-year="2026">2026</span>
-
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-sumerian" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Sumerian lunisolar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--align-left"
-                 data-id="ev-egypt-solar" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Ancient Egypt solar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-egypt-hours" data-year="-2100">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~2100 BCE</span>
-                <span class="label">Ancient Egypt hours in days</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom"
-                 data-id="ev-babylonians" data-year="-300">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~300 BCE</span>
-                <span class="label">Babylonians 360° celestial circle</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--top timeline-event--new"
-                 data-id="ev-greeks" data-year="1000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">1000 CE</span>
-                <span class="label">Greeks minutes and seconds</span>
-              </span>
-            </div>
-          </div>
-        </section>
-        <section>
-          <aside class="notes">
-            <p>Talking time before the atomic-second slide. Cover earlier
-            definitions of the second (1/86400 of a mean solar day, then
-            ephemeris time tied to Earth's orbit), the problem of those
-            definitions drifting, and how caesium-133 hyperfine transitions
-            give a stable, reproducible reference.</p>
-          </aside>
-        </section>
-        <section data-auto-animate class="timeline-slide">
-          <p class="timeline-title" data-id="tl-title">A brief history of timekeeping</p>
-          <div class="timeline" data-id="tl">
-            <div class="timeline-axis" data-id="tl-axis"></div>
-            <span class="timeline-era" data-id="era-3000" data-year="-3000">3000 BCE</span>
-            <span class="timeline-era" data-id="era+2026" data-year="2026">2026</span>
-
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-sumerian" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Sumerian lunisolar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--align-left"
-                 data-id="ev-egypt-solar" data-year="-3000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="label">Ancient Egypt solar calendar</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--top timeline-event--align-left"
-                 data-id="ev-egypt-hours" data-year="-2100">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~2100 BCE</span>
-                <span class="label">Ancient Egypt hours in days</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom"
-                 data-id="ev-babylonians" data-year="-300">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">~300 BCE</span>
-                <span class="label">Babylonians 360° celestial circle</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--top"
-                 data-id="ev-greeks" data-year="1000">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">1000 CE</span>
-                <span class="label">Greeks minutes and seconds</span>
-              </span>
-            </div>
-            <div class="timeline-event timeline-event--bottom timeline-event--align-right timeline-event--new"
-                 data-id="ev-atomic" data-year="1967">
-              <span class="dot"></span>
-              <span class="info">
-                <span class="year">1967</span>
-                <span class="label">Atomic-based second definition</span>
-              </span>
-            </div>
-          </div>
-        </section> -->
       </div>
     </div>
     <script src="js/reveal.min.js"></script>
