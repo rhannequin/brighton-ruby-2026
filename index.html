@@ -12,7 +12,7 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
+        <!-- <section>
           <p>October 4, 1582 → ?</p>
           <aside class="notes">
             <p>
@@ -540,6 +540,300 @@
               constant.
             </p>
           </aside>
+        </section>
+        <section>
+          <p>---------</p>
+        </section> -->
+
+        <section>
+          <h3>Lie #1: A day is 24 hours</h3>
+        </section>
+        <section>
+          <p>TODO: Egyptian sundial illustration</p>
+          <aside class="notes">
+            <p>
+              In ancient Egypt, around 2100 BCE, the day had twelve hours and
+              the night had twelve hours. But the hours weren't the same length
+              as ours. They stretched and shrank with the seasons. A summer
+              day-hour was longer than a winter day-hour, because the sun was up
+              longer and they still divided that span into twelve. And that was
+              fine.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>
+            Equal-length hours: ~150 BCE
+            <br>
+            Hipparchus
+          </p>
+          <aside class="notes">
+            <p>
+              It took the Greeks to give us the regular hour. We invented it.
+              It is not a fact of nature. The hour is a human convention that's
+              about two thousand years old.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>
+            Hours are a convention. Days are too.
+          </p>
+          <aside class="notes">
+            <p>
+              Which is a problem if you're storing time as numbers.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+          Time.zone = "Europe/London"
+          t = Time.zone.parse("2026-10-25 00:30:00")
+          # => Sun, 25 Oct 2026 00:30:00 BST +01:00
+          </code></pre>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+          t + 86400
+          # => Sun, 25 Oct 2026 23:30:00 GMT +00:00
+          </code></pre>
+        </section>
+        <section>
+          <p>
+            On October 25, 2026, in London, a day is 90,000 seconds long.
+          </p>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+          t + 1.day
+          # => Mon, 26 Oct 2026 00:30:00 GMT +00:00
+          </code></pre>
+          <aside class="notes">
+            <p>
+              <code>1.day</code> isn't a number. It's an
+              <code>ActiveSupport::Duration</code>, a value object that knows
+              what it means. ActiveSupport patches <code>Time#+</code> to call
+              advance instead of doing seconds. The fix is one character. Always
+              reach for the object that means what you want, not the number you
+              assume it equals.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <h3>Lie #2: The calendar is stable</h3>
+        </section>
+        <section>
+          <p>
+            TODO: Portrait of Isaac Newton
+          </p>
+          <p>
+            Born December 25, 1642
+          </p>
+        </section>
+        <section>
+          <p>
+            TODO: Portrait of Isaac Newton
+          </p>
+          <p>
+            Born January 4, 1643
+          </p>
+          <aside class="notes">
+            <p>
+              Both are correct. Britain switched calendars in 1752 and just
+              deleted eleven days. Newton's birth didn't move; the dates did.
+              The same person was born on two days, depending on which country's
+              calendar you ask.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>Calendars change.</p>
+          <p>Time zones change.</p>
+        </section>
+        <section>
+          <pre><code>
+      require "tzinfo"
+
+      tz = TZInfo::Timezone.get("America/Asuncion")
+      winter_utc = Time.utc(2025, 7, 1, 12, 0, 0)
+      local = tz.utc_to_local(winter_utc)
+
+      puts "UTC time  : #{winter_utc}"
+      puts "Local time: #{local}"
+
+      # UTC time  : 2025-07-01 12:00:00 UTC
+      # Local time: 2025-07-01 08:00:00
+          </code></pre>
+          <aside class="notes">
+            <p>
+              Let's look at Paraguay. If you run this code on an old app that
+              hasn't been updated for a while, it will give you a local time of
+              8 AM.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code>
+      require "tzinfo"
+
+      tz = TZInfo::Timezone.get("America/Asuncion")
+      winter_utc = Time.utc(2025, 7, 1, 12, 0, 0)
+      local = tz.utc_to_local(winter_utc)
+
+      puts "UTC time  : #{winter_utc}"
+      puts "Local time: #{local}"
+
+      # UTC time  : 2025-07-01 12:00:00 UTC
+      # Local time: 2025-07-01 09:00:00
+          </code></pre>
+          <aside class="notes">
+            <p>
+              Then, run the same on a recent version of Rails and you will see
+              the same code produces a different time.
+            </p>
+            <p>
+              That's because Paraguay observed DST until late 2024, and then
+              abolished it in 2025.
+            </p>
+            <p>
+              If your bundle is stale, your application is doing the right thing
+              for a country that no longer exists.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code>
+            $ bundle update tzinfo
+          </code></pre>
+        </section>
+        <section>
+          <h3>Lie #3: Time zones are geography</h3>
+        </section>
+        <section>
+         <aside class="notes">
+          <p>
+            Before the end of the 19th century, every town set its own clock by
+            the sun. Noon in Bristol was not noon in London, because solar time
+            is local. This was fine, because nobody could move faster than the
+            Sun did. Then we invented trains. People started experiencing two
+            local times in one day, and the railway timetables became
+            unreadable.
+          </p>
+         </aside>
+        </section>
+        <section>
+          <p>
+            TODO: Picture of meridians
+          </p>
+          <aside class="notes">
+            <p>
+              So, some countries adopted a single standard time for the whole
+              country, and the world was divided into time zones. Super easy,
+              you just have to separate the world into 24 time zones, each one
+              hour apart, and assign a standard time to each zone.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>
+            TODO: Picture of time zones map
+          </p>
+          <aside class="notes">
+            <p>
+              But of course we couldn't do something that simple. Countries want
+              to have a unified time for their people within their borders, not
+              just based on geography. So we have time zones that are a mix
+              between meridians and political borders.
+            </p>
+            <p>
+              Each time zone supports a local mean solar time that is applied to
+              everyone within its borders.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <p>
+            IANA database: 600+ time zones
+          </p>
+          <aside class="notes">
+            <p>
+              The IANA database stores more than 600 time zones and is updated
+              several times a year to reflect changes in time zone rules,
+              because somewhere in the world, a government has decided to start
+              or stop doing something with their clocks.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <h3>Lie #4: `Time.now` gives current time</h3>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            config.time_zone = "UTC"
+
+            Time.now      # => 2026-03-25 17:25:55 +0100
+            Time.current  # => 2026-03-25 16:25:58 UTC
+          </code></pre>
+          <aside class="notes">
+            <p>
+              My configuration said UTC. Time.now said no. Time.now reads the
+              system clock and the system zone. It does not consult your
+              application. The fix is one word.
+            </p>
+        </section>
+        <section>
+          <p>
+            <code>Time.current</code>
+          </p>
+          <p>
+            Always.
+          </p>
+        </section>
+        <section>
+          <h3>Lie #5: `Time.parse` is reliable</h3>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            Time.parse("2026-03-29 09:00:00")
+            # => 2026-03-29 09:00:00 +0200
+          </code></pre>
+          <aside class="notes">
+            <p>
+              There is no +0200 in the input. The +0200 came from my laptop. If
+              I deploy this code to a server in another zone, it returns a
+              different value for the same string. This is a very common bug and
+              the fix is quite easy as well.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <pre><code class="language-ruby">
+            Time.zone.parse("2026-03-29 09:00:00")
+            # => 2026-03-29 09:00:00 UTC
+          </code></pre>
+          <aside class="notes">
+            <p>
+              Five characters and your code won't assume anything on your
+              behalf.
+            </p>
+          </aside>
+        </section>
+        <section>
+          <h3>Lie #6: 1:30 AM happens once</h3>
+        </section>
+        <section>
+          <h3>Lie #7: JSON and the database preserve your time</h3>
+        </section>
+        <section>
+          <h3>Lie #8: A minute is 60 seconds</h3>
+        </section>
+        <section>
+          <h3>Toolkit</h3>
+          <!-- Storing?     timestamptz + IANA zone column -->
+          <!-- Parsing?     Time.zone.parse -->
+          <!-- Math?        1.day, change, advance -->
+          <!-- Scheduling?  Store user intent. Compute the instant. -->
+          <!-- Testing?     travel_to an evil date. -->
         </section>
 
         <!--
