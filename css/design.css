@@ -1,0 +1,630 @@
+/* Time is a lie — Brighton Ruby 2026
+   Editorial / mythbusting design system.
+   Loaded after reveal's black theme; overrides intentionally. */
+
+:root {
+  --bg: #0d0d0d;
+  --fg: #f5f5f5;
+  --muted: rgba(245, 245, 245, 0.65);
+  --dim:   rgba(245, 245, 245, 0.35);
+  --rule:  rgba(245, 245, 245, 0.15);
+
+  --lie:   #ff3b30;
+  --truth: #34c759;
+  --amber: #ffd43b;
+
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
+
+/* ---------- Base ------------------------------------------------------- */
+
+.reveal-viewport,
+.reveal {
+  background: var(--bg);
+}
+
+.reveal {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  text-transform: none;
+  color: var(--fg);
+  margin: 0 0 0.6em;
+}
+
+.reveal h2 { font-size: 2.2em; }
+.reveal h3 { font-size: 1.6em; font-weight: 500; }
+
+.reveal p {
+  font-size: 1.05em;
+  line-height: 1.4;
+  margin: 0 0 0.6em;
+}
+
+.reveal p small {
+  font-size: 0.55em;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.reveal a { color: var(--amber); text-decoration: none; }
+
+/* Inline code */
+.reveal code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.05em 0.35em;
+  border-radius: 3px;
+  color: var(--fg);
+}
+
+/* ---------- Chips ------------------------------------------------------ */
+/* The "LIE #1 ━━━━" / "TRUTH #1 ━━━━" label used on section openers. */
+
+.reveal .chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0 0 1.4em;
+  line-height: 1;
+}
+
+.reveal .chip::after {
+  content: '';
+  display: inline-block;
+  width: 2.5em;
+  height: 2px;
+  background: currentColor;
+  margin-left: 0.9em;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+.reveal .lie    .chip { color: var(--lie); }
+.reveal .truth  .chip { color: var(--truth); }
+.reveal .hook--reveal .chip { color: var(--lie); }
+.reveal .toolkit--bad  .chip { color: var(--lie); }
+.reveal .toolkit--good .chip { color: var(--truth); }
+
+/* ---------- Side accent bar (LIE / TRUTH) ------------------------------ */
+/* Reveal already sets `position: absolute` on every section, so the section
+   is already a containing block for absolute children. Adding `position:
+   relative` here would actually break reveal's vertical centering. */
+
+/* Inset content past the bar on slides that carry one.
+   Content is centered within the section — the bar stays on the left as
+   the section indicator, not as a reading edge.
+   `.moment` opts out (centered single-statement slides, no bar). */
+.reveal section.lie:not(.moment),
+.reveal section.truth:not(.moment) {
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Center block-level content inside the section. */
+.reveal section.lie:not(.moment) h3,
+.reveal section.truth:not(.moment) h3 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Bar is bound to the section's natural height (top: 0; bottom: 0). A fixed
+   height would overflow the section on short slides, which throws off
+   reveal's vertical-centering measurement. Bar height = section height, so
+   bigger content → bigger bar, automatically. */
+.reveal section.lie:not(.moment)::before,
+.reveal section.truth:not(.moment)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--lie);
+  border-radius: 2px;
+}
+
+.reveal section.truth:not(.moment)::before { background: var(--truth); }
+
+/* ---------- Intro / title slide --------------------------------------- */
+/* The opening verdict. Sits before the cold-open hooks so the audience
+   reads it as they file in. Title gets the same red underline as
+   hook--reveal, which makes the visual language coherent from slide 1. */
+
+.reveal section.intro {
+  text-align: center;
+}
+
+.reveal section.intro .title {
+  font-family: var(--font-sans);
+  font-size: 4em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--fg);
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.2em;
+  margin: 0 0 1.4em;
+}
+
+.reveal section.intro .title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: var(--lie);
+  border-radius: 3px;
+}
+
+.reveal section.intro .meta {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ---------- Opening hooks --------------------------------------------- */
+/* Both question and reveal slides are centered "moments". The reveal slides
+   get a red underline that draws under the answer — more dramatic than a
+   side bar, and the eye reads it as "this is the punchline." */
+
+.reveal section.hook,
+.reveal section.hook--reveal {
+  text-align: center;
+}
+
+.reveal section.hook p,
+.reveal section.hook--reveal p {
+  font-size: 2.4em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin: 0 auto;
+}
+
+.reveal section.hook p {
+  color: var(--fg);
+}
+
+.reveal section.hook--reveal p:first-of-type {
+  color: var(--fg);
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.25em;
+}
+
+.reveal section.hook--reveal p:first-of-type::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: var(--lie);
+  border-radius: 2px;
+}
+
+.reveal section.hook--reveal p small {
+  font-size: 0.4em;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+/* ---------- "Moment" slides ------------------------------------------- */
+/* For single-statement slides like "Use the object that means what you
+   want." — the prose IS the slide. Drop the bar, center everything, scale
+   the type up. Color comes from a tiny preceding mark instead of a bar. */
+
+.reveal section.moment {
+  text-align: center;
+}
+
+.reveal section.moment p {
+  font-size: 2.1em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  max-width: 22ch;
+  margin: 0 auto;
+}
+
+.reveal section.moment::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 4px;
+  margin: 0 auto 1.2em;
+  background: var(--fg);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+.reveal section.lie.moment::before   { background: var(--lie);   opacity: 1; }
+.reveal section.truth.moment::before { background: var(--truth); opacity: 1; }
+
+/* On moment slides the chip is supporting context, not a label — quiet it
+   down and drop the trailing line since the colored mark already plays
+   that role. */
+.reveal section.moment .chip {
+  font-size: 0.42em;
+  opacity: 0.7;
+  margin-bottom: 1.2em;
+}
+
+.reveal section.moment .chip::after {
+  display: none;
+}
+
+/* Inline <code> on moment slides drops the grey pill. At hero-statement
+   size the pill reads as a button/chip and fights the typography; the
+   mono font is enough to mark it as code. */
+.reveal section.moment p code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/* ---------- Section opener (LIE #N / TRUTH #N standalone slide) ------- */
+/* Big so it fills the slide and reads from the back of the room. The
+   longest titles ("JSON and the database preserve your time") wrap to
+   two lines — that's fine and adds visual weight. */
+
+.reveal section.lie h3,
+.reveal section.truth h3 {
+  font-size: 3em;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  max-width: 18ch;
+}
+
+/* ---------- Speaker intro --------------------------------------------- */
+
+.reveal section.speaker {
+  text-align: left;
+}
+
+.reveal section.speaker .name {
+  font-family: var(--font-sans);
+  font-size: 2.6em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin: 0 0 0.15em;
+  line-height: 1.05;
+}
+
+.reveal section.speaker .handle {
+  font-family: var(--font-mono);
+  font-size: 1.1em;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 1.4em;
+  letter-spacing: -0.01em;
+}
+
+.reveal section.speaker .role {
+  font-size: 0.95em;
+  color: var(--muted);
+  margin-bottom: 0.5em;
+  letter-spacing: 0.02em;
+}
+
+.reveal section.speaker .logo {
+  width: 460px;
+  height: auto;
+  color: var(--lie);
+  display: block;
+}
+
+/* ---------- Code blocks ----------------------------------------------- */
+
+/* Override the black-theme default of `width: 90%; margin: auto`,
+   which was centering code blocks and creating misalignment with chips
+   on the same slide. Code now flows with the section's own alignment. */
+.reveal pre {
+  width: auto;
+  display: block;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+  font-size: 1em;
+}
+
+.reveal pre code {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  line-height: 1.5;
+  padding: 0.6em 0;
+  background: transparent;
+  border-radius: 0;
+  color: var(--fg);
+  max-height: none;
+  overflow: visible;
+  word-wrap: normal;
+  white-space: pre;
+  display: inline-block;
+  text-align: left;
+  /* JetBrains Mono ligates `#{`, `==`, `->` etc. into connected glyphs.
+     For presentation code we want every character to read literally —
+     a slide is not the place for a clever `#{` ligature that looks like
+     a strikethrough from row 10. */
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+/* Muted syntax palette — calmer than Monokai */
+.reveal .hljs                 { background: transparent; color: var(--fg); }
+.reveal .hljs-comment,
+.reveal .hljs-quote           { color: var(--dim); font-style: italic; }
+.reveal .hljs-keyword,
+.reveal .hljs-selector-tag,
+.reveal .hljs-literal,
+.reveal .hljs-section,
+.reveal .hljs-link            { color: #ff8c7a; }
+.reveal .hljs-string,
+.reveal .hljs-regexp,
+.reveal .hljs-symbol,
+.reveal .hljs-meta-string     { color: var(--amber); }
+.reveal .hljs-number,
+.reveal .hljs-meta            { color: #c7a8ff; }
+.reveal .hljs-class .hljs-title,
+.reveal .hljs-type,
+.reveal .hljs-built_in,
+.reveal .hljs-title           { color: #8dd6ff; font-weight: 500; }
+.reveal .hljs-attr,
+.reveal .hljs-variable,
+.reveal .hljs-params          { color: var(--fg); }
+
+/* Output lines (lines starting with "#") get visually dimmer +
+   a soft truth-green leading mark, so input vs. output reads cleanly. */
+.reveal pre code .hljs-comment {
+  color: rgba(245, 245, 245, 0.55);
+}
+
+/* ---------- Tables ---------------------------------------------------- */
+
+.reveal table {
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.7em;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 0.5em 1em;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.reveal table th {
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  border-bottom-color: var(--fg);
+}
+
+.reveal table code {
+  font-size: 0.95em;
+}
+
+/* ---------- Toolkit / checklist --------------------------------------- */
+
+.reveal section.toolkit {
+  text-align: center;
+}
+
+.reveal section.toolkit h3 {
+  font-size: 2em;
+  color: var(--truth);
+  margin-bottom: 0.8em;
+}
+
+.reveal section.toolkit table {
+  margin: 0;
+}
+
+.reveal section.toolkit table td:first-child {
+  color: var(--truth);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85em;
+  width: 8em;
+}
+
+/* ---------- Epilogue: quieter, starfield ------------------------------ */
+
+.reveal section.epilogue {
+  text-align: center;
+}
+
+.reveal section.epilogue p {
+  font-size: 2.6em;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  max-width: 22ch;
+  margin: 0 auto;
+}
+
+.reveal section.epilogue p small {
+  font-size: 0.4em;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  display: inline-block;
+  margin-top: 0.8em;
+}
+
+.reveal section.epilogue h3 {
+  font-size: 2.6em;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  max-width: 22ch;
+  margin: 0 auto;
+}
+
+/* Starfield: attached to `.reveal .slides` (which fills the whole slide
+   canvas, 960x700) instead of the section (whose height is just its
+   content). Activated only when an epilogue section is currently presented
+   — `:has()` keeps this purely CSS, no JS needed. */
+.reveal .slides::before,
+.reveal .slides::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background-repeat: no-repeat;
+}
+
+/* Small sharp stars, distributed across the entire canvas. */
+.reveal .slides::after {
+  background-image:
+    radial-gradient(1px 1px at  4%  6%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at  9% 38%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 13% 71%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 17% 92%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 21% 14%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 26% 47%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 31% 83%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 36% 24%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 41% 58%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 46%  9%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 50% 95%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 55% 41%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 60% 73%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 65% 19%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 56%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 74% 89%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 79% 33%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 84% 67%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 88%  3%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 92% 48%,  #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 96% 81%,  #fff 50%, transparent 51%);
+}
+
+/* Larger, softer stars layered behind for depth. */
+.reveal .slides::before {
+  background-image:
+    radial-gradient(2px 2px at 11% 22%, rgba(255,255,255,0.7) 30%, transparent 60%),
+    radial-gradient(2px 2px at 33% 64%, rgba(255,255,255,0.7) 30%, transparent 60%),
+    radial-gradient(2px 2px at 58% 18%, rgba(255,255,255,0.7) 30%, transparent 60%),
+    radial-gradient(2px 2px at 72% 86%, rgba(255,255,255,0.7) 30%, transparent 60%),
+    radial-gradient(2px 2px at 87% 42%, rgba(255,255,255,0.7) 30%, transparent 60%);
+}
+
+/* Switch the starfield on whenever any epilogue section is .present. */
+.reveal .slides:has(> section.epilogue.present)::after  { opacity: 0.65; }
+.reveal .slides:has(> section.epilogue.present)::before { opacity: 0.45; }
+
+/* ---------- Closing slides -------------------------------------------- */
+
+.reveal section.closing {
+  text-align: center;
+}
+
+.reveal section.closing h3 {
+  font-size: 2.6em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  max-width: 22ch;
+  margin: 0 auto;
+}
+
+.reveal section.closing p {
+  font-size: 2.2em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.reveal section.closing p small {
+  font-size: 0.4em;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.reveal section.closing .contact {
+  list-style: none;
+  padding: 0;
+  margin: 1.6em 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+/* ---------- Reveal chrome --------------------------------------------- */
+
+/* Slide number, controls, progress — all subtle */
+.reveal .progress {
+  color: var(--lie);
+  height: 2px;
+}
+
+.reveal .controls {
+  color: var(--dim);
+}
+
+/* Fragment defaults: a bit slower & less abrupt */
+.reveal .fragment {
+  transition: opacity 0.35s ease;
+}
+
+/* ---------- Small utilities ------------------------------------------- */
+
+.reveal .center { text-align: center; }
+.reveal .muted  { color: var(--muted); }
+.reveal .dim    { color: var(--dim); }
+
+/* "→ X" / "→ ?" pointer style on hook slides */
+.reveal section.hook p,
+.reveal section.hook--reveal p:first-of-type {
+  font-variant-numeric: tabular-nums;
+}

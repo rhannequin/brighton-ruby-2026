@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/black.min.css">
     <link rel="stylesheet" href="plugin/highlight/monokai.min.css">
-    <link rel="stylesheet" href="css/timeline.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="css/design.css">
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
-          <p>October 4, 1582 → ?</p>
+        <section class="intro">
+          <h1 class="title">Time is a lie.</h1>
+          <p class="meta">Brighton Ruby 2026 &middot; @rhannequin</p>
+        </section>
+        <section class="hook">
+          <p>October 4, 1582 &rarr; ?</p>
           <aside class="notes">
             <p>
               Let's start easy, we all know how to count days, right?
@@ -23,7 +30,7 @@
             </p>
           </aside>
         </section>
-        <section>
+        <section class="hook--reveal">
           <p>October 15, 1582</p>
           <aside class="notes">
             <p>
@@ -35,7 +42,7 @@
             </p>
           </aside>
         </section>
-        <section>
+        <section class="hook">
           <p>Month of October Revolution?</p>
           <aside class="notes">
             <p>
@@ -44,11 +51,9 @@
             </p>
           </aside>
         </section>
-        <section>
+        <section class="hook--reveal">
           <p>November, 1917</p>
-          <p>
-            <small>in the Gregorian Calendar</small>
-          </p>
+          <p><small>in the Gregorian Calendar</small></p>
           <aside class="notes">
             <p>
               In Western Europe we witnessed the October Revolution in November,
@@ -57,8 +62,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>December 31, 2016 23:59:59 → ?</p>
+        <section class="hook">
+          <p>December 31, 2016 23:59:59 &rarr; ?</p>
           <aside class="notes">
             <p>
               Calendars are complicated, let's do something more simple. Can you
@@ -66,11 +71,9 @@
             </p>
           </aside>
         </section>
-        <section>
+        <section class="hook--reveal">
           <p>December 31, 2016 23:59:60</p>
-          <p>
-            <small>in UTC</small>
-          </p>
+          <p><small>in UTC</small></p>
           <aside class="notes">
             <p>
               Yep, the minute actually lasted 61 seconds, because of a leap
@@ -78,13 +81,11 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>@rhannequin</p>
-          <p>
-            Senior developer at
-            <br>
-            <span style="color: #e03131">
-              <svg xmlns="http://www.w3.org/2000/svg" width="500" height="168" viewBox="0 0 860 168" role="img" aria-labelledby="aakazji17z83heq1nkw627tz3obdg8bf" fill="currentColor">
+        <section class="speaker">
+          <p class="name">Rémy Hannequin</p>
+          <p class="handle">@rhannequin</p>
+          <p class="role">Senior developer at</p>
+          <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 168" role="img" aria-labelledby="aakazji17z83heq1nkw627tz3obdg8bf" fill="currentColor">
                 <title id="aakazji17z83heq1nkw627tz3obdg8bf">thoughtbot</title>
                 <path d="M210.603 128.912C204.519 131.08 197.603 132.168 193.435 132.44C188.951 132.74 185.272 131.515 182.46 129.674C179.622 127.833 177.542 125.448 176.214 122.573C174.867 119.698 174.188 116.687 174.188 113.568V73.6548H164V58.9629H174.188V45.84L191.998 32.8441V58.9538H207.81V73.6457H191.998V106.213C191.998 109.877 192.215 112.507 192.649 114.103C193.083 115.699 194.05 116.706 195.596 117.141C197.133 117.522 199.004 117.603 202.539 116.814L206.969 115.49C206.969 115.49 209.374 123.924 210.594 128.912H210.603Z"></path>
                 <path d="M282.628 90.9494V130.998H264.818V92.2282C264.818 85.508 263.76 80.5382 261.6 77.3187C259.439 74.1173 255.922 72.4939 251.032 72.4939C246.873 72.4939 243.465 73.4734 240.816 75.4232C239.496 76.3755 238.276 77.5091 237.109 78.8151V131.007H219.3V28.9353H237.109V63.697C238.972 62.5543 240.897 61.475 242.922 60.4684C246.466 58.6818 250.706 57.7839 255.624 57.7839C261.952 57.7839 267.087 59.1896 271.083 62.0101C275.061 64.8034 277.972 68.7031 279.843 73.6729C281.706 78.6609 282.628 84.4107 282.628 90.9494Z"></path>
@@ -124,34 +125,33 @@
                     92.1623C67.2527 89.3875 69.4393 87.1635 72.1388
                     87.1635C74.8582 87.1752 77.0543 89.4123 77.0461
                     92.1623C77.0438 94.9058 74.8518 97.133 72.1388 97.1482Z"></path>
-              </svg>
-            </span>
-          </p>
+          </svg>
         </section>
-        <section>
-          <h3>Lie #1: A day is 24 hours</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 1</span>
+          <h3>A day is 24 hours</h3>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
           Time.zone = "Europe/London"
           t = Time.zone.parse("2026-10-25 00:30:00")
           # => Sun, 25 Oct 2026 00:30:00 BST +01:00
           </code></pre>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
           t + 86400
           # => Sun, 25 Oct 2026 23:30:00 GMT +00:00
           </code></pre>
         </section>
-        <section>
+        <section class="lie moment">
           <p>
             On October 25, 2026, in London, a day is 90,000 seconds long.
           </p>
         </section>
-        <section>
-          <h3>Truth #1</h3>
-          <pre><code class="language-ruby">
+        <section class="truth">
+          <span class="chip">Truth &#8470; 1</span>
+          <pre><code class="language-ruby" data-trim>
           t + 1.day
           # => Mon, 26 Oct 2026 00:30:00 GMT +00:00
           </code></pre>
@@ -170,7 +170,7 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="truth moment">
           <p>Use the object that means what you want.</p>
           <aside class="notes">
             <ul>
@@ -179,8 +179,8 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="truth">
+          <pre><code class="language-ruby" data-trim>
           jan_31 = Time.zone.local(2026, 1, 31)
 
           jan_31 + 1.month   # => Sat, 28 Feb 2026
@@ -210,9 +210,9 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="truth">
           <h3>Same day, different hour</h3>
-          <pre><code class="language-ruby">
+          <pre><code class="language-ruby" data-trim>
           Time.zone.now.change(
             hour: 9, min: 0, sec: 0
           )
@@ -228,35 +228,27 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <h3>Lie #2: The calendar is stable</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 2</span>
+          <h3>The calendar is stable</h3>
         </section>
-        <section>
-          <p>
-            TODO: Portrait of Isaac Newton
-          </p>
-          <p>
-            Born December 25, 1642
-          </p>
+        <section class="lie">
+          <p class="muted">TODO: Portrait of Isaac Newton</p>
+          <p>Born December 25, 1642</p>
         </section>
-        <section>
-          <p>
-            TODO: Portrait of Isaac Newton
-          </p>
-          <p>
-            Born January 4, 1643
-          </p>
+        <section class="lie">
+          <p class="muted">TODO: Portrait of Isaac Newton</p>
+          <p>Born January 4, 1643</p>
           <aside class="notes">
             <p>
               Both are correct. Britain switched calendars in 1752 and just
-              deleted eleven days. Newton's birth didn't move; the dates did.
-              The same person was born on two days, depending on which country's
-              calendar you ask.
+              deleted eleven days. So the same person ends up with two
+              birthdays, depending on which country's calendar you ask.
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
           Date.new(1642, 12, 25, Date::ENGLAND) ==
             Date.new(1643, 1, 4)
           # => true
@@ -280,10 +272,11 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <h3>Truth #2</h3>
-          <p>If the date is older than your grandparents,</p>
-          <p>ask which calendar.</p>
+        <section class="truth moment">
+          <span class="chip">Truth &#8470; 2</span>
+          <p>
+            If the date is older than your grandparents,<br>ask which calendar.
+          </p>
           <aside class="notes">
             <ul>
               <li>Most apps never hit this</li>
@@ -298,24 +291,26 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <h3>Lie #3: Your zone data is current</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 3</span>
+          <h3>Your zone data is current</h3>
           <aside class="notes">
             <p>
-              Calendars changed centuries ago. Zone rules are changing in
-              our lifetime. Same shape of problem, just faster.
+              Calendars changed centuries ago. Zone rules keep changing in
+              our lifetime. Same problem, just faster.
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code>
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
       require "tzinfo"
 
-      tz = TZInfo::Timezone.get("America/Asuncion")
-      winter_utc = Time.utc(2025, 7, 1, 12, 0, 0)
-      local = tz.utc_to_local(winter_utc)
+      zone = "America/Asuncion"
+      tz   = TZInfo::Timezone.get(zone)
+      utc  = Time.utc(2025, 7, 1, 12, 0, 0)
+      local = tz.utc_to_local(utc)
 
-      puts "UTC time  : #{winter_utc}"
+      puts "UTC time  : #{utc}"
       puts "Local time: #{local}"
 
       # UTC time  : 2025-07-01 12:00:00 UTC
@@ -329,15 +324,16 @@
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code>
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
       require "tzinfo"
 
-      tz = TZInfo::Timezone.get("America/Asuncion")
-      winter_utc = Time.utc(2025, 7, 1, 12, 0, 0)
-      local = tz.utc_to_local(winter_utc)
+      zone = "America/Asuncion"
+      tz   = TZInfo::Timezone.get(zone)
+      utc  = Time.utc(2025, 7, 1, 12, 0, 0)
+      local = tz.utc_to_local(utc)
 
-      puts "UTC time  : #{winter_utc}"
+      puts "UTC time  : #{utc}"
       puts "Local time: #{local}"
 
       # UTC time  : 2025-07-01 12:00:00 UTC
@@ -358,16 +354,17 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Truth #3</h3>
-          <pre><code>
+        <section class="truth">
+          <span class="chip">Truth &#8470; 3</span>
+          <pre><code class="language-bash" data-trim>
             $ bundle update tzinfo
           </code></pre>
         </section>
-        <section>
-          <h3>Lie #4: Time zones are geography</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 4</span>
+          <h3>Time zones are geography</h3>
         </section>
-        <section>
+        <section class="lie">
          <aside class="notes">
           <p>
             Before the end of the 19th century, every town set its own clock by
@@ -379,10 +376,8 @@
           </p>
          </aside>
         </section>
-        <section>
-          <p>
-            TODO: Picture of meridians
-          </p>
+        <section class="lie">
+          <p class="muted">TODO: Picture of meridians</p>
           <aside class="notes">
             <p>
               So, some countries adopted a single standard time for the whole
@@ -392,10 +387,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>
-            TODO: Picture of time zones map
-          </p>
+        <section class="lie">
+          <p class="muted">TODO: Picture of time zones map</p>
           <aside class="notes">
             <p>
               But of course we couldn't do something that simple. Countries want
@@ -409,10 +402,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>
-            IANA database: 600+ time zones
-          </p>
+        <section class="lie moment">
+          <p>IANA database: 600+ time zones</p>
           <aside class="notes">
             <p>
               The IANA database stores more than 600 time zones and is updated
@@ -422,10 +413,11 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Truth #4</h3>
-          <p>Store IANA names.</p>
-          <p>Avoid Rails names</p>
+        <section class="truth moment">
+          <span class="chip">Truth &#8470; 4</span>
+          <p>
+            Store IANA names.<br><small class="muted">Avoid Rails names.</small>
+          </p>
           <aside class="notes">
             <p>
               If you need more context than just a point in time, you might want
@@ -440,15 +432,16 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Lie #5: `Time.now` gives current time</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 5</span>
+          <h3><code>Time.now</code> gives current time</h3>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             config.time_zone = "UTC"
 
-            Time.now      # => 2026-03-25 17:25:55 +0100
-            Time.current  # => 2026-03-25 16:25:58 UTC
+            Time.now      # => 17:25:55 +0100
+            Time.current  # => 16:25:58 UTC
           </code></pre>
           <aside class="notes">
             <p>
@@ -456,21 +449,20 @@
               system clock and the system zone. It does not consult your
               application. The fix is one word.
             </p>
+          </aside>
         </section>
-        <section>
-          <h3>Truth #5</h3>
+        <section class="truth moment">
+          <span class="chip">Truth &#8470; 5</span>
           <p>
-            <code>Time.current</code>
-          </p>
-          <p>
-            Always.
+            <code>Time.current</code><br><small class="muted">Always.</small>
           </p>
         </section>
-        <section>
-          <h3>Lie #6: <code>Time.parse</code> is reliable</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 6</span>
+          <h3><code>Time.parse</code> is reliable</h3>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             Time.parse("2026-03-29 09:00:00")
             # => 2026-03-29 09:00:00 +0200
           </code></pre>
@@ -483,9 +475,9 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Truth #6</h3>
-          <pre><code class="language-ruby">
+        <section class="truth">
+          <span class="chip">Truth &#8470; 6</span>
+          <pre><code class="language-ruby" data-trim>
             Time.zone.parse("2026-03-29 09:00:00")
             # => 2026-03-29 09:00:00 UTC
           </code></pre>
@@ -496,11 +488,12 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Lie #7: 1:30 AM happens once</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 7</span>
+          <h3>1:30 AM happens once</h3>
         </section>
-        <section>
-          <p>TODO: some kind of picture</p>
+        <section class="lie">
+          <p class="muted">TODO: some kind of picture</p>
           <aside class="notes">
             <p>
               Daylight saving time was originally an industrial scheduling
@@ -511,8 +504,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             tz = TZInfo::Timezone.get("Europe/London")
 
             ghost = Time.new(2026, 3, 29, 1, 30, 0)
@@ -524,19 +517,19 @@
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             tz.local_to_utc(ghost)
           </code></pre>
           <aside class="notes">
             <p>
-              That time never happened. Anywhere. To anyone. If you store it,
-              you have stored a lie.
+              That time never happened. Anywhere. To anyone. Store it and
+              you've stored a lie.
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language_ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             # => TZInfo::PeriodNotFound
           </code></pre>
           <aside class="notes">
@@ -546,35 +539,28 @@
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             tz = TZInfo::Timezone.get("Europe/London")
-
             ghost = Time.new(2026, 10, 25, 1, 30, 0)
-          </code></pre>
-          <aside class="notes">
-            <p>
-              I am generous, today'll see a second ghost, or actually
-              something that looks like a ghost but is actually a clone.
-            </p>
-          </aside>
-        </section>
-        <section>
-          <pre><code class="language-ruby">
-            tz.local_to_utc(ghost)
 
+            tz.local_to_utc(ghost)
             # => TZInfo::AmbiguousTime
           </code></pre>
           <aside class="notes">
             <p>
-              When the clocks go back, the same local time happens twice. If
-              you try to convert it to UTC, you get an error because it's
-              ambiguous. You have to choose which one you mean.
+              Here is a second one. This one is not really a ghost, it's
+              more of a twin.
+            </p>
+            <p>
+              When the clocks go back, the same local time happens twice.
+              If you try to convert it to UTC, you get an error because
+              it's ambiguous. You have to choose which one you mean.
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
             Time.zone.parse("2026-03-29 01:30:00")
             # => Sun, 29 Mar 2026 02:30:00 BST +01:00
 
@@ -589,8 +575,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Truth #7</h3>
+        <section class="truth">
+          <span class="chip">Truth &#8470; 7</span>
           <p>
             When parsing user input,
             <br>
@@ -612,44 +598,46 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Lie #8: JSON and the database preserve your time</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 8</span>
+          <h3>JSON and the database preserve your time</h3>
         </section>
-        <section>
-          <pre><code class="language-ruby">
-            Time.zone.parse("2026-06-25 09:00:00+01:00").to_json
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
+            str = "2026-06-25 09:00:00+01:00"
+            Time.zone.parse(str).to_json
           </code></pre>
           <aside class="notes">
             <p>
-              At this point, you might be feeling safe, you're using
-              <code>zone</code>, the string includes the offset, and you the
-              time and date are pretty far to the scary ones we've seen so far.
+              At this point, you might be feeling safe. You're using
+              <code>zone</code>, the string includes the offset, and the
+              time and date are pretty far from the scary ones we've seen
+              so far.
             </p>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
-            Time.zone.parse("2026-06-25 09:00:00+01:00").to_json
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
+            str = "2026-06-25 09:00:00+01:00"
+            Time.zone.parse(str).to_json
 
             # => "2026-06-25T08:00:00.000Z"
           </code></pre>
           <aside class="notes">
             <p>
-              And yes, it's true, nothing broke, nothing raised, this created
-              a perfectly valid JSON string of a perfectly valid time.
+              And yes, nothing broke, nothing raised, you got a valid JSON
+              string for a valid time.
             </p>
             <p>
-              But you lost a valuable information in the process, the offset.
-              The time is now in UTC, and you have no way to know it was
+              But you lost something important on the way: the offset. The
+              time is now in UTC, and you have no way to know it was
               originally in BST.
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Truth #8</h3>
-          <p>
-            Outside Ruby object, don't forget the zone.
-          </p>
+        <section class="truth moment">
+          <span class="chip">Truth &#8470; 8</span>
+          <p>Outside Ruby objects, don't forget the zone.</p>
           <aside class="notes">
             <p>
               Once you leave Ruby for serialization or storage, remember the
@@ -657,21 +645,20 @@
             </p>
           </aside>
         </section>
-        <section>
+        <section class="truth">
           <p>Database warning</p>
           <p>PostgreSQL: <code>timestamptz</code></p>
           <p>MySQL: <code>datetime</code></p>
           <p>SQLite: no datetime type</p>
-          <p></p>
           <aside class="notes">
             <p>
               If you need to store the time and keep the zone, you'll need to
               store them separately.
             </p>
             <p>
-              PotgreSQL has a <code>timestamptz</code> type that stores the time
-              in UTC and the offset, but it doesn't store the IANA name of the
-              time zone.
+              PostgreSQL has a <code>timestamptz</code> type that stores the
+              time in UTC and the offset, but it doesn't store the IANA name of
+              the time zone.
             </p>
             <p>
               MySQL's <code>datetime</code> type doesn't store the time zone at
@@ -684,13 +671,12 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Lie #9: A minute is 60 seconds</h3>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 9</span>
+          <h3>A minute is 60 seconds</h3>
         </section>
-        <section>
-          <p>
-            TODO: picture of the Moon and the Earth
-          </p>
+        <section class="lie">
+          <p class="muted">TODO: picture of the Moon and the Earth</p>
           <aside class="notes">
             <p>
               Earth's rotation is slowing down. The Moon pulls on our oceans,
@@ -699,9 +685,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>TAI</p>
-          <p>International Atomic Time</p>
+        <section class="lie moment">
+          <p>TAI<br><small class="muted">International Atomic Time</small></p>
           <aside class="notes">
             <p>
               Today, the definition of the second is not based on the Earth's
@@ -711,9 +696,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>UTC</p>
-          <p>Coordinated Universal Time</p>
+        <section class="lie moment">
+          <p>UTC<br><small class="muted">Coordinated Universal Time</small></p>
           <aside class="notes">
             <p>
               But you and me, we use UTC, which is a time scale that is based on
@@ -728,8 +712,8 @@
             </p>
           </aside>
         </section>
-        <section>
-          <p>TAI - UTC = 37 seconds</p>
+        <section class="lie moment">
+          <p>TAI &minus; UTC = 37 seconds</p>
           <aside class="notes">
             <p>
               As of today, TAI is 37 seconds ahead of UTC.
@@ -739,7 +723,7 @@
             </p>
           </aside>
         </section>
-        <section>
+        <section class="lie">
           <table>
             <thead>
               <tr>
@@ -754,12 +738,12 @@
                 <td>2017-01-01 00:00:35</td>
                 <td>1483228799</td>
               </tr>
-              <tr>
-                <td>2016-12-31 23:59:60</td>
+              <tr class="fragment">
+                <td>2016-12-31 23:59:<strong>60</strong></td>
                 <td>2017-01-01 00:00:36</td>
-                <td>1483228799</td>
+                <td><strong>1483228799</strong></td>
               </tr>
-              <tr>
+              <tr class="fragment">
                 <td>2017-01-01 00:00:00</td>
                 <td>2017-01-01 00:00:37</td>
                 <td>1483228800</td>
@@ -784,8 +768,9 @@
             </p>
           </aside>
         </section>
-        <section>
-          <h3>Toolkit</h3>
+        <section class="toolkit">
+          <span class="chip">Toolkit</span>
+          <h3>What to take home.</h3>
           <aside class="notes">
             <ul>
               <li>Nine lies is a lot to remember</li>
@@ -793,7 +778,7 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="toolkit">
           <p>The 9 AM job.</p>
           <aside class="notes">
             <ul>
@@ -805,9 +790,9 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
-          # ❌
+        <section class="toolkit toolkit--bad">
+          <span class="chip">Don't</span>
+          <pre><code class="language-ruby" data-trim>
           Notification.create!(
             run_at: 1.day.from_now
           )
@@ -818,13 +803,16 @@
               <li>User moves from Paris to Tokyo → wrong</li>
               <li>DST kicks in → wrong</li>
               <li>Paraguay abolishes DST → wrong</li>
-              <li>You stored the answer, you needed to store the question</li>
+              <li>
+                You stored the result. You needed to store the rule that
+                produces it.
+              </li>
             </ul>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
-          # ✅
+        <section class="toolkit toolkit--good">
+          <span class="chip">Do</span>
+          <pre><code class="language-ruby" data-trim>
           t.string   :time_zone
           t.integer  :run_hour
           t.integer  :run_minute
@@ -838,14 +826,15 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <pre><code class="language-ruby">
+        <section class="toolkit">
+          <pre><code class="language-ruby" data-trim>
           Time.use_zone(user.time_zone) do
-            target = Time.zone.now.change(
+            now    = Time.zone.now
+            target = now.change(
               hour: user.run_hour,
               min:  user.run_minute,
             )
-            target += 1.day if target &lt;= Time.zone.now
+            target += 1.day if target &lt;= now
             target.utc
           end
           </code></pre>
@@ -854,15 +843,18 @@
               <li>Survives DST</li>
               <li>Survives the user moving</li>
               <li>Survives Paraguay</li>
-              <li>Intent stored, instant computed</li>
+              <li>
+                The intent lives in the database, the instant is computed on
+                demand
+              </li>
             </ul>
           </aside>
         </section>
-        <section>
-          <h3>Testing</h3>
-          <pre><code class="language-ruby">
+        <section class="toolkit">
+          <span class="chip">Testing</span>
+          <pre><code class="language-ruby" data-trim>
           travel_to Time.utc(2026, 10, 25, 0, 30) do
-            # London is about to have a 90,000-second day.
+            # A 90,000-second day in London.
           end
           </code></pre>
           <aside class="notes">
@@ -875,8 +867,8 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <h3>Showing time to humans</h3>
+        <section class="toolkit">
+          <span class="chip">Showing time to humans</span>
           <p><code>10:23 +03:00</code></p>
           <p><code>10:23 AST</code></p>
           <p><code>10:23 Asia/Riyadh</code></p>
@@ -896,7 +888,7 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="toolkit">
           <p><code>10:23 Asia/Riyadh (UTC+3)</code></p>
           <aside class="notes">
             <ul>
@@ -911,9 +903,9 @@
             </ul>
           </aside>
         </section>
-        <section>
-          <h3>The checklist</h3>
-          <table style="font-size: 0.7em; margin: 0 auto;">
+        <section class="toolkit">
+          <span class="chip">The checklist</span>
+          <table>
             <tr>
               <td>Store?</td>
               <td><code>timestamptz</code> + IANA zone column</td>
@@ -944,7 +936,20 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="truth moment">
+          <p>Use the object that means what you want.</p>
+          <aside class="notes">
+            <ul>
+              <li>Same line as Truth #1. The whole talk in one sentence.</li>
+              <li>
+                <code>1.day</code>, <code>change</code>, IANA names,
+                <code>Time.zone</code> all follow the same rule.
+              </li>
+              <li>Pause, then move into the epilogue.</li>
+            </ul>
+          </aside>
+        </section>
+        <section class="epilogue">
           <h3>One last thing.</h3>
           <aside class="notes">
             <ul>
@@ -956,7 +961,7 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="epilogue">
           <p>Astronoby</p>
           <p><small>a Ruby gem for astronomical calculations</small></p>
           <aside class="notes">
@@ -967,7 +972,7 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="epilogue">
           <p>2026-01-09, Paris</p>
           <p class="fragment">The Moon does not set.</p>
           <aside class="notes">
@@ -982,15 +987,15 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="epilogue">
           <p>In a polar winter, the Sun doesn't rise.</p>
           <p class="fragment"><small>For months.</small></p>
         </section>
-        <section>
+        <section class="epilogue">
           <p>On the ISS, they use UTC.</p>
           <p class="fragment"><small>They cross 16 time zones a day.</small></p>
         </section>
-        <section>
+        <section class="epilogue">
           <p>On the Moon, NASA is still arguing about what time it is.</p>
           <aside class="notes">
             <ul>
@@ -1001,7 +1006,7 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="epilogue">
           <p>On Mars, a day is 24 hours and 39 minutes.</p>
           <aside class="notes">
             <ul>
@@ -1014,33 +1019,31 @@
             </ul>
           </aside>
         </section>
-        <section>
+        <section class="closing">
           <h3>Time was never going to be simple.</h3>
         </section>
-        <section>
+        <section class="closing">
           <h3>Be kind to the next developer.</h3>
           <p class="fragment"><small>(It might be you.)</small></p>
         </section>
-        <section>
+        <section class="closing">
           <p>Use <code>Time.zone.parse</code>.</p>
           <p>Thank you.</p>
-          <aside class="notes">
-            <ul>
-              <li>@rhannequin</li>
-              <li>thoughtbot</li>
-              <li>github.com/rhannequin/astronoby</li>
-            </ul>
-          </aside>
+          <ul class="contact">
+            <li>@rhannequin</li>
+            <li>thoughtbot</li>
+            <li>github.com/rhannequin/astronoby</li>
+          </ul>
         </section>
       </div>
     </div>
     <script src="js/reveal.min.js"></script>
     <script src="plugin/highlight/highlight.min.js"></script>
     <script src="plugin/notes/notes.min.js"></script>
-    <script src="js/timeline.js"></script>
     <script>
       Reveal.initialize({
         hash: true,
+        controls: false,
         transition: 'slide',
         plugins: [RevealHighlight, RevealNotes]
       });
