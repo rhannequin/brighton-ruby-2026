@@ -19,6 +19,44 @@
           <h1 class="title">Time is a lie.</h1>
           <p class="meta">Brighton Ruby 2026 &middot; @rhannequin</p>
         </section>
+        <section class="moment prologue">
+          <p class="muted">TODO: image of a sunrise / sundial / analemma</p>
+          <p>For most of human history,<br>the only clock was the sky.</p>
+          <aside class="notes">
+            <p>
+              Before we wrote any of this down, there was one clock: the
+              sky. The Sun told you when to wake up, when to plant, when
+              to harvest. The Moon told you when months were. The stars
+              told you where North was.
+            </p>
+            <p>
+              Time was something you read, not something you stored.
+            </p>
+          </aside>
+        </section>
+        <section class="moment prologue">
+          <p>We invented railways. We invented Ruby.</p>
+          <p class="fragment">The sky did not change.</p>
+          <p class="fragment">
+            <small>Our code is still trying to catch up.</small>
+          </p>
+          <aside class="notes">
+            <p>
+              Then we invented railways, and trains needed schedules, and
+              schedules needed a shared clock. We invented standard time.
+              We invented time zones. We invented Unix timestamps, ISO
+              8601, Ruby, ActiveSupport.
+            </p>
+            <p>
+              The sky did not change. The Earth still wobbles, the Moon
+              still slows us down, the year is still not a whole number
+              of days. Our code is still trying to catch up.
+            </p>
+            <p>
+              Let me show you what trying to catch up looks like.
+            </p>
+          </aside>
+        </section>
         <section class="hook">
           <p>October 4, 1582 &rarr; ?</p>
           <aside class="notes">
@@ -134,6 +172,23 @@
             <p>
               We can talk about anything together, and I can't resist talking
               about food or astronomy.
+            </p>
+          </aside>
+        </section>
+        <section class="moment spine">
+          <span class="chip">One feature</span>
+          <p>When does the Sun rise tomorrow<br>in your city?</p>
+          <aside class="notes">
+            <p>
+              Before we look at any lie, let's pick a feature. One feature.
+              A weather app, a prayer-time app, an astronomy app, doesn't
+              matter. The whole feature is one question: when does the Sun
+              rise tomorrow in your city?
+            </p>
+            <p>
+              Sounds simple. A time of day, computed from a location.
+              We are going to spend the next forty minutes watching this
+              question get answered wrong, in ten different ways.
             </p>
           </aside>
         </section>
@@ -440,52 +495,96 @@
           </aside>
         </section>
         <section class="lie">
-          <p class="muted">TODO: Picture of solar time</p>
-         <aside class="notes">
+          <p>Before 1840, every town set its clock by the Sun.</p>
           <p>
-            Before the end of the 19th century, every town set its own clock by
-            the sun. Noon in Bristol was not noon in London, because solar time
-            is local. This was fine, because nobody could move faster than the
-            Sun did. Then we invented trains. People started experiencing two
-            local times in one day, and the railway timetables became
-            unreadable.
+            Penzance &middot; <code>11:38</code><br>
+            Bristol &middot; <code>11:51</code><br>
+            London &middot; <code>12:00</code><br>
+            Norwich &middot; <code>12:05</code>
           </p>
-         </aside>
-        </section>
-        <section class="lie">
-          <p class="muted">TODO: Picture of meridians</p>
           <aside class="notes">
             <p>
-              So, some countries adopted a single standard time for the whole
-              country, and the world was divided into time zones. Super easy,
-              you just have to separate the world into 24 time zones, each one
-              hour apart, and assign a standard time to each zone.
+              Before 1840, every town set its own clock by the Sun. Noon
+              was when the Sun was directly overhead, and the Sun is in a
+              slightly different place over Penzance than over Norwich.
+              So when London read 12:00, Penzance read 11:38. Bristol
+              read 11:51. Norwich read 12:05.
+            </p>
+            <p>
+              These were not approximations. These were the times. Local
+              mean solar time. And it was fine — because nobody could
+              move faster than the Sun did.
             </p>
           </aside>
         </section>
         <section class="lie">
-          <p class="muted">TODO: Picture of time zones map</p>
+          <p>Then we invented trains.</p>
+          <p class="fragment">
+            <code>1847</code> &middot; one time, one country.
+          </p>
           <aside class="notes">
             <p>
-              But of course we couldn't do something that simple. Countries want
-              to have a unified time for their people within their borders, not
-              just based on geography. So we have time zones that are a mix
-              between meridians and political borders.
+              Then we invented trains. A two-hour journey from London to
+              Bristol now meant arriving in another time. Railway
+              timetables became unreadable. Stations posted two clocks,
+              and Bristol cathedral kept two minute hands — one for
+              Bristol time, one for railway time.
             </p>
             <p>
-              Each time zone supports a local mean solar time that is applied to
-              everyone within its borders.
+              In 1847, British railways agreed to use Greenwich Mean
+              Time at every station, regardless of where it sat. Local
+              solar time died for everyone except Greenwich. Other
+              countries followed.
+            </p>
+          </aside>
+        </section>
+        <section class="lie">
+          <p class="muted">TODO: time zones map with crooked borders</p>
+          <p>Then politics drew the lines.</p>
+          <aside class="notes">
+            <p>
+              Then governments started bending the lines. China is one
+              zone wide enough to be five. India is offset by half an
+              hour. Nepal by forty-five minutes. Spain sits on the same
+              meridian as Britain but reads its clocks an hour ahead,
+              because Franco aligned with Berlin in 1940 and nobody ever
+              moved it back.
+            </p>
+            <p>
+              Time zones look like geography. They are political maps
+              with a sundial pinned to them.
             </p>
           </aside>
         </section>
         <section class="lie moment">
-          <p>IANA database: 600+ time zones</p>
+          <p>We traded astronomical accuracy<br>for human convenience.</p>
           <aside class="notes">
             <p>
-              The IANA database stores more than 600 time zones and is updated
-              several times a year to reflect changes in time zone rules,
-              because somewhere in the world, a government has decided to start
-              or stop doing something with their clocks.
+              That's the deal. The Sun stopped telling us the time. The
+              trains did. Then the politicians did. We agreed it was
+              worth it, because the alternative was unreadable
+              timetables and meetings that started at different moments
+              for different attendees.
+            </p>
+            <p>
+              The receipt for that trade is a database.
+            </p>
+          </aside>
+        </section>
+        <section class="lie moment">
+          <p>The IANA database is the receipt.</p>
+          <p><small>600+ zones &middot; updated several times a year</small></p>
+          <aside class="notes">
+            <p>
+              The IANA time zone database. More than 600 zones. Updated
+              several times a year — because somewhere in the world, a
+              government has just decided to do something different with
+              their clocks.
+            </p>
+            <p>
+              Remember Lie 3 — <code>bundle update tzinfo</code>?
+              That's not a chore. That's you collecting the latest
+              receipt.
             </p>
           </aside>
         </section>
@@ -887,78 +986,161 @@
             </p>
           </aside>
         </section>
+        <section class="lie">
+          <span class="chip">Lie &#8470; 10</span>
+          <h3>Noon is when the Sun is highest</h3>
+          <aside class="notes">
+            <p>
+              Lie number ten, and this one is genuinely cosmic. The
+              clock strikes twelve, you look up, the Sun is at its
+              highest point. Right? That is the definition of noon.
+            </p>
+            <p>
+              Except it isn't. Not most days.
+            </p>
+          </aside>
+        </section>
+        <section class="lie">
+          <p>In London, solar noon happens at:</p>
+          <p>
+            Feb 11 &middot; <code>12:14</code><br>
+            Nov 3 &middot; <code>11:44</code>
+          </p>
+          <aside class="notes">
+            <p>
+              Same city. Same meridian. On February 11, the Sun reaches
+              its highest point at 12:14. On November 3, it gets there
+              at 11:44. Half an hour apart, depending on which day of
+              the year you ask.
+            </p>
+            <p>
+              This is the equation of time. The Earth's orbit isn't a
+              circle — it's a slightly squashed ellipse — and the
+              Earth's axis is tilted. Both of those facts mean the Sun
+              runs a bit fast for part of the year and a bit slow for
+              the rest.
+            </p>
+          </aside>
+        </section>
+        <section class="lie moment">
+          <p>The Sun is up to 16 minutes off the clock.</p>
+          <p class="fragment"><small>Twice a year.</small></p>
+          <aside class="notes">
+            <p>
+              The Sun pulls ahead of the clock by up to 16 minutes
+              around November, and falls behind by up to 14 minutes
+              around February. Twice a year, the gap closes to zero.
+              The rest of the time, the Sun is somewhere else.
+            </p>
+          </aside>
+        </section>
+        <section class="lie">
+          <p class="muted">
+            TODO: analemma image (figure-8 of Sun position over a year)
+          </p>
+          <p class="fragment">One year of solar noons, photographed.</p>
+          <aside class="notes">
+            <p>
+              If you photograph the Sun at the same clock time every
+              day for a year, you don't get a dot. You get this — a
+              figure-8 called an analemma. The vertical axis is the
+              tilt of the Earth. The horizontal axis is the equation
+              of time. Every dot is a noon the clock got wrong.
+            </p>
+          </aside>
+        </section>
+        <section class="truth moment">
+          <span class="chip">Truth &#8470; 10</span>
+          <p>The clock is not the Sun.</p>
+          <aside class="notes">
+            <p>
+              If you are computing sunrise, sunset, prayer times, the
+              position of any object in the sky — you cannot ask the
+              clock where the Sun is. You have to ask the Sun.
+            </p>
+            <p>
+              Which is exactly what our sunrise feature does. The
+              clock just labels the answer.
+            </p>
+          </aside>
+        </section>
         <section class="toolkit">
           <span class="chip">Toolkit</span>
           <h3>What to take home.</h3>
           <aside class="notes">
             <p>
-              Nine lies is a lot to remember. So here is what to actually
+              Ten lies is a lot to remember. So here is what to actually
               take home.
             </p>
           </aside>
         </section>
         <section class="toolkit">
-          <p>The 9 AM job.</p>
+          <p>Back to the sunrise.</p>
           <aside class="notes">
             <p>
-              A concrete example. A user in Tokyo wants a daily
-              notification at 9 AM, their time. How do you store that?
+              Remember our one feature. When does the Sun rise tomorrow
+              in your city? We have spent ten lies watching that
+              question break. Now let's actually build it.
             </p>
           </aside>
         </section>
         <section class="toolkit toolkit--bad">
           <span class="chip">Don't</span>
           <pre><code class="language-ruby" data-trim>
-          Notification.create!(
-            run_at: 1.day.from_now
+          User.create!(
+            next_sunrise_at: tomorrows_sunrise(user)
           )
           </code></pre>
           <aside class="notes">
             <p>
-              Don't store a UTC instant. The user moves from Paris to
-              Tokyo, the notification is wrong. DST kicks in, the
-              notification is wrong. Paraguay abolishes DST, the
-              notification is wrong.
+              Don't store the sunrise. The user moves from Paris to
+              Tokyo, the sunrise is wrong. DST kicks in, the sunrise is
+              wrong. Paraguay abolishes DST, the sunrise is wrong. The
+              user travels to Tromsø in January, the sunrise doesn't
+              exist.
             </p>
             <p>
               You stored the result of a calculation. You needed to store
-              the rule that produces it.
+              the inputs that produce it.
             </p>
           </aside>
         </section>
         <section class="toolkit toolkit--good">
           <span class="chip">Do</span>
           <pre><code class="language-ruby" data-trim>
-          t.string   :time_zone
-          t.integer  :run_hour
-          t.integer  :run_minute
-          t.datetime :next_run_at
+          t.decimal :latitude
+          t.decimal :longitude
+          t.string  :time_zone
           </code></pre>
           <aside class="notes">
             <p>
-              Store the intent: the time zone, the hour, the minute.
-              Compute the actual instant when you need it. And recompute
-              it after every run.
+              Store the intent: where the user is, and which zone they
+              read time in. Compute the sunrise when you actually need
+              it. A latitude and a longitude don't lie about DST.
             </p>
           </aside>
         </section>
         <section class="toolkit">
           <pre><code class="language-ruby" data-trim>
           Time.use_zone(user.time_zone) do
-            now    = Time.zone.now
-            target = now.change(
-              hour: user.run_hour,
-              min:  user.run_minute,
+            observer = Observer.new(
+              latitude:  Angle.from_degrees(user.latitude),
+              longitude: Angle.from_degrees(user.longitude),
             )
-            target += 1.day if target &lt;= now
-            target.utc
+            calculator = RiseTransitSetCalculator.new(
+              body:     Sun,
+              observer: observer
+            )
+            calculator.event_on(Date.tomorrow).rising_time
           end
           </code></pre>
           <aside class="notes">
             <p>
               This survives DST. It survives the user moving from one
-              country to another. It survives Paraguay. The intent lives in
-              the database, the instant is computed on demand.
+              country to another. It survives Paraguay. The intent lives
+              in the database, the sunrise is computed on demand. And
+              the answer might be <code>nil</code> — which is fine, we
+              will get to that.
             </p>
           </aside>
         </section>
@@ -1065,10 +1247,15 @@
           <p><small>a Ruby gem for astronomical calculations</small></p>
           <aside class="notes">
             <p>
-              This is Astronoby. A Ruby gem I maintain. It computes
+              The sunrise we just computed — there is a gem behind it.
+              It's called Astronoby. A Ruby gem I maintain. It computes
               sunrises, moonsets, planetary positions. And it has taught
               me more about time than any production system I have ever
               worked on.
+            </p>
+            <p>
+              Because in astronomy, every lie we just went through —
+              they're not edge cases. They're the main path.
             </p>
           </aside>
         </section>
@@ -1093,14 +1280,21 @@
           <p class="fragment"><small>For months.</small></p>
           <aside class="notes">
             <p>
-              It's not only the Moon. In the polar winter, the Sun doesn't
-              rise either. For months.
+              Remember our feature? When does the Sun rise tomorrow in
+              your city? We used <code>Time.zone</code>, we updated
+              tzinfo, we stored IANA names, we computed on demand. We
+              did everything right.
             </p>
             <p>
-              If your weather app calls <code>sunrise.strftime</code>
-              somewhere in there, it will fail. Or worse, it will quietly
-              show yesterday's value, and nobody will notice until somebody
-              writes to support.
+              And then somebody opens the app in Tromsø in January.
+              The Sun does not rise. For months.
+            </p>
+            <p>
+              If your code calls <code>sunrise.strftime</code> somewhere
+              in there, it crashes. Or worse, it quietly shows
+              yesterday's value, and nobody notices until somebody writes
+              to support. Sometimes <code>nil</code> is the only honest
+              answer to a reasonable question.
             </p>
           </aside>
         </section>
