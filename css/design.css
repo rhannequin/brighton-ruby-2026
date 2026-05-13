@@ -497,6 +497,14 @@
   margin-top: 0.8em;
 }
 
+/* Recap variant: four short statements stacked, smaller than the
+   default epilogue single-line size, so all of them fit without
+   the 22ch max-width wrapping each line. */
+.reveal section.epilogue.recap p {
+  font-size: 1.5em;
+  max-width: 32ch;
+}
+
 .reveal section.epilogue h3 {
   font-size: 2.6em;
   font-weight: 500;
@@ -598,6 +606,7 @@
   color: var(--muted);
   letter-spacing: 0.02em;
   line-height: 1.6;
+  text-align: center;
 }
 
 /* ---------- Reveal chrome --------------------------------------------- */
@@ -627,4 +636,24 @@
 .reveal section.hook p,
 .reveal section.hook--reveal p:first-of-type {
   font-variant-numeric: tabular-nums;
+}
+
+/* Image placeholder — dashed box used until real artwork lands. */
+.reveal .placeholder-img {
+  width: 400px;
+  height: 225px;
+  margin: 0.8em auto;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px dashed var(--dim);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.55em;
+  letter-spacing: 0.05em;
+  text-align: center;
+  padding: 0 1em;
+  box-sizing: border-box;
 }
