@@ -20,7 +20,7 @@
           <p class="meta">Brighton Ruby 2026 &middot; @rhannequin</p>
         </section>
         <section class="moment prologue">
-          <div class="placeholder-img" style="width: 340px; height: 340px;">
+          <div class="placeholder-img placeholder-img--square">
             Sunrise / sundial / analemma
           </div>
           <p>For most of human history,<br>the only clock was the sky.</p>
@@ -241,7 +241,10 @@
         </section>
         <section class="lie">
           <pre><code class="language-ruby" data-trim>
-          t + 86400
+          duration = 24 * 60 * 60
+          # => 86400
+
+          t + duration
           # => Sun, 25 Oct 2026 23:30:00 GMT +00:00
           </code></pre>
           <aside class="notes">
@@ -491,7 +494,7 @@
           </aside>
         </section>
         <section class="lie">
-          <div class="placeholder-img" style="width: 620px; height: 320px;">
+          <div class="placeholder-img placeholder-img--map">
             World time-zone map<br>(crooked political borders)
           </div>
           <p>Then politics drew the lines.</p>
@@ -693,7 +696,7 @@
           </aside>
         </section>
         <section class="lie">
-          <div class="placeholder-img" style="width: 480px; height: 270px;">
+          <div class="placeholder-img placeholder-img--landscape">
             DST illustration<br>(clocks springing forward / falling back)
           </div>
           <aside class="notes">
@@ -1039,7 +1042,7 @@
           </aside>
         </section>
         <section class="lie">
-          <div class="placeholder-img" style="width: 260px; height: 420px;">
+          <div class="placeholder-img placeholder-img--portrait">
             Analemma<br>(figure-8 of Sun<br>position over a year)
           </div>
           <p class="fragment">One year of solar noons, photographed.</p>
