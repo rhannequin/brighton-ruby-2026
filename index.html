@@ -255,6 +255,20 @@
             </p>
           </aside>
         </section>
+        <section class="lie">
+          <pre><code class="language-ruby" data-trim>
+          t + 24.hours
+          # => Sun, 25 Oct 2026 23:30:00 GMT +00:00
+          </code></pre>
+          <aside class="notes">
+            <p>
+              <code>24.hours</code> reads nicer than
+              <code>86400</code>, but it does the same thing. Rails
+              expands hours as elapsed seconds — no calendar math
+              involved. We still don't reach Monday.
+            </p>
+          </aside>
+        </section>
         <section class="lie moment">
           <p>
             On October 25, 2026, in London, a day is 90,000 seconds long.
@@ -279,16 +293,17 @@
           </code></pre>
           <aside class="notes">
             <p>
-              <code>1.day</code> is not a number. It is an
-              <code>ActiveSupport::Duration</code>, a value object that
-              knows what it means.
+              Both <code>24.hours</code> and <code>1.day</code> are
+              <code>ActiveSupport::Duration</code> objects — value
+              objects that know what they mean. The difference is the
+              unit.
             </p>
             <p>
               ActiveSupport patches <code>Time#+</code> to call
-              <code>advance</code> when it sees a Duration, instead of
-              just adding seconds. The diff looks tiny, but the type
-              changed: we stopped adding a number and started adding a
-              calendar day. The math now knows about the calendar.
+              <code>advance</code> when it sees a Duration. With hours,
+              <code>advance</code> adds elapsed seconds. With days, it
+              moves the calendar — and that's where it honors the DST
+              gap.
             </p>
           </aside>
         </section>
@@ -855,6 +870,9 @@
         </section>
         <section class="lie moment">
           <p>The Sun is up to 16 minutes off the clock.</p>
+          <p class="fragment">
+            <small>Before time zones even get involved.</small>
+          </p>
           <p class="fragment"><small>Every year.</small></p>
           <aside class="notes">
             <p>
@@ -1053,6 +1071,10 @@
             <tr>
               <td>Current time?</td>
               <td><code>Time.current</code></td>
+            </tr>
+            <tr>
+              <td>Today?</td>
+              <td><code>Date.current</code></td>
             </tr>
             <tr>
               <td>Calendar math?</td>
