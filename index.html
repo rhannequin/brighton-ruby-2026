@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/black.min.css">
     <link rel="stylesheet" href="plugin/highlight/monokai.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/design.css">
   </head>
   <body>
@@ -29,7 +27,7 @@
               Before we wrote any of this down, there was one clock: the
               sky. The Sun told you when to wake up, when to plant, when
               to harvest. The Moon told you when months were. The stars
-              told you where North was.
+              told you where north was.
             </p>
             <p>
               Time was something you read, not something you stored.
@@ -95,7 +93,7 @@
         </section>
         <section class="hook--reveal">
           <p>November, 1917</p>
-          <p><small>in the Gregorian Calendar</small></p>
+          <p><small>in the Gregorian calendar</small></p>
           <aside class="notes">
             <p>
               In Western Europe we witnessed the October Revolution in November,
@@ -108,7 +106,7 @@
           <p>December 31, 2016 23:59:59 &rarr; ?</p>
           <aside class="notes">
             <p>
-              Calendars are complicated, let's do something more simple. Can you
+              Calendars are complicated. Let's try something simpler. Can you
               guess what's right after December 31, 2016 23:59:59?
             </p>
           </aside>
@@ -302,8 +300,8 @@
               ActiveSupport patches <code>Time#+</code> to call
               <code>advance</code> when it sees a Duration. With hours,
               <code>advance</code> adds elapsed seconds. With days, it
-              moves the calendar — and that's where it honors the DST
-              gap.
+              moves the calendar — and that's where it honors the
+              local civil day.
             </p>
           </aside>
         </section>
@@ -648,8 +646,8 @@
           <aside class="notes">
             <p>
               Daylight saving time was originally an industrial scheduling
-              experiment. It became universal during World War One, then mostly
-              stayed. Most countries that observe it move clocks by one hour,
+              experiment. It spread widely during World War One, and parts of
+              it stuck. Most countries that observe it move clocks by one hour,
               twice a year. And as you may know, each of those moves does
               something terrible to your code.
             </p>
