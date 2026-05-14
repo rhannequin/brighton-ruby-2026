@@ -20,10 +20,10 @@
           <p class="meta">Brighton Ruby 2026 &middot; @rhannequin</p>
         </section>
         <section class="moment prologue">
-          <div class="placeholder-img placeholder-img--square">
-            Sunrise / sundial / analemma
+          <div class="row">
+            <img src="img/sundial.jpg" alt="Sundial">
+            <p>For most of human history,<br>the only clock was the sky.</p>
           </div>
-          <p>For most of human history,<br>the only clock was the sky.</p>
           <aside class="notes">
             <p>
               Before we wrote any of this down, there was one clock: the
@@ -345,7 +345,7 @@
         <section class="truth">
           <h3>Same day, different hour</h3>
           <pre><code class="language-ruby" data-trim>
-          Time.zone.now.change(
+          Time.current.change(
             hour: 9, min: 0, sec: 0
           )
           </code></pre>
@@ -475,7 +475,7 @@
         <section class="lie">
           <p>Then we invented trains.</p>
           <p class="fragment">
-            <code>1847</code> &middot; one time, one country.
+            <code>1847</code> &middot; one railway time.
           </p>
           <aside class="notes">
             <p>
@@ -494,9 +494,9 @@
           </aside>
         </section>
         <section class="lie">
-          <div class="placeholder-img placeholder-img--map">
-            World time-zone map<br>(crooked political borders)
-          </div>
+          <p>
+            <img src="img/timezones.png" alt="Actual time zones of the world">
+          </p>
           <p>Then politics drew the lines.</p>
           <aside class="notes">
             <p>
@@ -634,10 +634,17 @@
           </p>
           <aside class="notes">
             <p>
-              <code>Time.current</code>. Always. Not "when convenient", not
-              "when you remember". Always. <code>Time.now</code> reads the
-              operating system. <code>Time.current</code> reads your
-              application. You wrote the application. Trust it.
+              <code>Time.now</code> reads the operating system.
+              <code>Time.current</code> reads your application. In Rails
+              app code, default to <code>Time.current</code> — you
+              almost always wanted the one that matches the zone you
+              configured.
+            </p>
+            <p>
+              There are legitimate uses for <code>Time.now</code>:
+              measuring elapsed time, code outside Rails, logging the
+              machine environment. But in everyday app code, you wrote
+              the application — trust it.
             </p>
           </aside>
         </section>
@@ -696,9 +703,12 @@
           </aside>
         </section>
         <section class="lie">
-          <div class="placeholder-img placeholder-img--landscape">
-            DST illustration<br>(clocks springing forward / falling back)
-          </div>
+          <img
+            src="img/dst.avif"
+            alt="
+              Two clocks, one showing 'Spring forward' and the other showing
+              'Fall backward'
+            ">
           <aside class="notes">
             <p>
               Daylight saving time was originally an industrial scheduling
@@ -805,6 +815,8 @@
         </section>
         <section class="lie">
           <pre><code class="language-ruby" data-trim>
+            Time.zone = "UTC"
+
             str = "2026-06-25 09:00:00+01:00"
             Time.zone.parse(str).to_json
           </code></pre>
@@ -819,6 +831,8 @@
         </section>
         <section class="lie">
           <pre><code class="language-ruby" data-trim>
+            Time.zone = "UTC"
+
             str = "2026-06-25 09:00:00+01:00"
             Time.zone.parse(str).to_json
 
@@ -830,10 +844,10 @@
               string for a valid time.
             </p>
             <p>
-              You lost the original offset, and you definitely lost any
-              zone identity. <code>+01:00</code> wasn't enough to know
-              London in the first place — it could have been a dozen
-              other zones — and now even <code>+01:00</code> is gone.
+              The instant survived. But the original offset did not,
+              and the IANA zone was never there to begin with —
+              <code>+01:00</code> could have been a dozen zones, and
+              now even <code>+01:00</code> is gone.
             </p>
           </aside>
         </section>
@@ -869,9 +883,12 @@
               is misleading; nothing about the zone survives the round-trip.
             </p>
             <p>
-              MySQL's <code>datetime</code> doesn't store the zone at all.
-              SQLite doesn't have a datetime type, so you store it as a
-              string or an integer and handle the zone yourself.
+              MySQL has two: <code>datetime</code> stores calendar
+              fields with no zone at all, and <code>timestamp</code>
+              converts through the session zone but only covers a
+              limited range. SQLite doesn't have a datetime type, so
+              you store it as a string or an integer and handle the
+              zone yourself.
             </p>
             <p>
               If the zone matters, store it next to the instant — IANA
@@ -1031,21 +1048,29 @@
         </section>
         <section class="lie moment">
           <p>The Sun is up to 16 minutes off the clock.</p>
-          <p class="fragment"><small>Twice a year.</small></p>
+          <p class="fragment"><small>Every year.</small></p>
           <aside class="notes">
             <p>
               The Sun pulls ahead of the clock by up to 16 minutes
               around November, and falls behind by up to 14 minutes
-              around February. Twice a year, the gap closes to zero.
-              The rest of the time, the Sun is somewhere else.
+              around February. The gap reaches zero a few times a year,
+              but most days the clock and the Sun disagree.
+            </p>
+            <p>
+              Now, this is probably not something that would bother us
+              programmers but I still wanted to mention it. We use a mean solar
+              time in two manners: to define the length of a day, and to define
+              the hours on the clock.
             </p>
           </aside>
         </section>
         <section class="lie">
-          <div class="placeholder-img placeholder-img--portrait">
-            Analemma<br>(figure-8 of Sun<br>position over a year)
-          </div>
-          <p class="fragment">One year of solar noons, photographed.</p>
+          <p>
+            <img
+              src="img/analemmas.jpg"
+              alt="3 analemmas, for NYC, Melbourne and Quito">
+          </p>
+          <p>One year of solar noons.</p>
           <aside class="notes">
             <p>
               If you photograph the Sun at the same clock time every
@@ -1142,16 +1167,11 @@
         <section class="toolkit">
           <pre><code class="language-ruby" data-trim>
           Time.use_zone(user.time_zone) do
-            observer = Observer.new(
-              latitude:  Angle.from_degrees(user.latitude),
-              longitude: Angle.from_degrees(user.longitude),
+            Sunrise.compute(
+              latitude:  user.latitude,
+              longitude: user.longitude,
+              date:      Time.zone.tomorrow
             )
-            calculator = RiseTransitSetCalculator.new(
-              body:     Sun,
-              observer: observer
-            )
-            date = Time.zone.tomorrow.to_date
-            calculator.event_on(date).rising_time
           end
           </code></pre>
           <aside class="notes">
@@ -1218,7 +1238,7 @@
           <table>
             <tr>
               <td>Instant?</td>
-              <td>Store an instant / <code>timestamptz</code></td>
+              <td>Store a UTC instant</td>
             </tr>
             <tr>
               <td>Zone matters?</td>
@@ -1239,7 +1259,7 @@
               <td>Require ISO 8601 with an offset</td>
             </tr>
             <tr>
-              <td>App-zone input?</td>
+              <td>Trusted app-zone string?</td>
               <td><code>Time.zone.parse</code></td>
             </tr>
             <tr>
@@ -1272,32 +1292,10 @@
               <code>1.day</code>, <code>change</code>, IANA names,
               <code>Time.zone</code> — they all follow the same rule.
             </p>
-          </aside>
-        </section>
-        <section class="epilogue">
-          <h3>One last thing.</h3>
-          <aside class="notes">
             <p>
-              One last thing. Most of my open source work is not in
-              business apps, it is in astronomy. And the strangest time
-              bugs I have ever seen, I have seen in astronomy.
-            </p>
-          </aside>
-        </section>
-        <section class="epilogue">
-          <p>Astronoby</p>
-          <p><small>a Ruby gem for astronomical calculations</small></p>
-          <aside class="notes">
-            <p>
-              The sunrise we just computed — there is a gem behind it.
-              It's called Astronoby. A Ruby gem I maintain. It computes
-              sunrises, moonsets, planetary positions. And it has taught
-              me more about time than any production system I have ever
-              worked on.
-            </p>
-            <p>
-              Because in astronomy, every lie we just went through —
-              they're not edge cases. They're the main path.
+              That's the engineering takeaway. But I want to leave you
+              with one more thing — because in astronomy, every lie we
+              just went through isn't an edge case. It's the main path.
             </p>
           </aside>
         </section>
@@ -1359,40 +1357,18 @@
             </p>
           </aside>
         </section>
-        <section class="epilogue">
-          <p>The ISS lives by UTC &mdash; sixteen zones a day.</p>
-          <p class="fragment">NASA is still arguing about lunar time.</p>
-          <p class="fragment">On Mars, a day is 24 hours and 39 minutes.</p>
-          <aside class="notes">
-            <p>
-              One last burst before we close. On the ISS they live by
-              UTC — with sixteen time zones every ninety minutes, there
-              is no real alternative.
-            </p>
-            <p>
-              On the Moon, clocks tick about 58 microseconds per day
-              faster than on Earth. NASA is actively designing a
-              standard called Coordinated Lunar Time. That is enough to
-              ruin GPS-grade navigation.
-            </p>
-            <p>
-              On Mars, a day is 24 hours and 39 minutes. If we ever
-              live there, some Ruby developer is going to open a bug
-              ticket about leap minutes. With luck, I will be retired.
-            </p>
-          </aside>
-        </section>
         <section class="closing">
           <h3>Time was never going to be simple.</h3>
           <aside class="notes">
             <p>
-              We started with a calendar that lost ten days in 1582. We
-              ended with the Moon, where they have not yet decided what
-              time it is.
+              We started with a calendar that lost ten days in 1582.
+              We ended in a polar winter where the Sun doesn't rise
+              for months and <code>nil</code> is the only honest
+              answer.
             </p>
             <p>
-              Four hundred and forty years, and the only thing we have
-              agreed on is that we are not done arguing.
+              Four hundred and forty years, and the only thing we
+              have agreed on is that we are not done arguing.
             </p>
           </aside>
         </section>
@@ -1404,7 +1380,6 @@
           <ul class="contact">
             <li>@rhannequin</li>
             <li>thoughtbot</li>
-            <li>github.com/rhannequin/astronoby</li>
           </ul>
           <aside class="notes">
             <p>

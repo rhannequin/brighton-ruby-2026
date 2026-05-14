@@ -680,6 +680,30 @@
   height: 420px;
 }
 
+/* Prologue: image + statement side by side. The .moment text styling still
+   applies to the <p>, so we just override the centering + max-width and let
+   flex do the rest. */
+.reveal section.prologue .row {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  text-align: left;
+}
+
+.reveal section.prologue .row img {
+  max-width: 40%;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.reveal section.prologue .row p {
+  flex: 1;
+  max-width: none;
+  margin: 0;
+  font-size: 1.6em;
+}
+
 /* Tiny muted attribution / source caption under images. */
 .reveal .source {
   font-family: var(--font-mono);
