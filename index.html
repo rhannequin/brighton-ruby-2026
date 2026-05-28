@@ -73,9 +73,9 @@
           <p><small>in the Gregorian calendar</small></p>
           <aside class="notes">
             <p>
-              In Western Europe we witnessed the October Revolution in November,
-              1917 because the Gregorian calendar was only adopted in Russia in
-              1918, after the Russian Revolution.
+              In the Gregorian calendar, the October Revolution happened in
+              November 1917, because Russia only adopted the Gregorian calendar
+              in 1918, after the Revolution.
             </p>
           </aside>
         </section>
@@ -156,7 +156,7 @@
         </section>
         <section class="moment spine">
           <span class="chip">One feature</span>
-          <p>When does the Sun rise tomorrow<br>in your city?</p>
+          <p>When does the Sun rise tomorrow<br>in your hometown?</p>
           <aside class="notes">
             <p>
               Before anything, let's pick one feature. A weather app, a
@@ -231,6 +231,11 @@
           <p>
             On October 25, 2026, in London, a day is 90,000 seconds long.
           </p>
+          <p>
+            <img
+              src="img/not-quite-my-tempo.gif"
+              alt="'Not quite my tempo' from Whiplash">
+          </p>
           <aside class="notes">
             <p>
               What's happening is that daylight saving time change will happen
@@ -264,8 +269,8 @@
           <aside class="notes">
             <p>
               One of the main things to remember from the few minutes we have
-              together is to use the object that means what you want. Semantic
-              matters.
+              together is to use the object that means what you want. Semantics
+              matter.
             </p>
             <p>
               For our sunrise feature, this means: tomorrow is not 86400 seconds
@@ -317,7 +322,7 @@
         <section class="lie">
           <p>Before 1840, every town set its clock by the Sun.</p>
           <p>
-            Bristol &middot; <code>11:51</code><br>
+            Bristol &middot; <code>11:50</code><br>
             Brighton &middot; <code>11:59</code><br>
             London &middot; <code>12:00</code><br>
             Norwich &middot; <code>12:05</code>
@@ -325,12 +330,12 @@
           <aside class="notes">
             <p>
               Before 1840, every town set its own clock by the Sun. Noon
-              was when the Sun was directly overhead, and at a given instant the
-              Sun is in a slightly different place seen from Bristol than from
-              Norwich.
+              was when the Sun reached its highest point in the sky, and at a
+              given instant the Sun is in a slightly different place seen from
+              Bristol than from Norwich.
             </p>
             <p>
-              So when London read 12:00, Bristol read 11:51. Brighton read
+              So when London read 12:00, Bristol read 11:50. Brighton read
               11:59. Norwich read 12:05. Local mean solar time.
             </p>
             <p>
@@ -341,9 +346,7 @@
         </section>
         <section class="lie">
           <p>Then we invented trains.</p>
-          <p class="fragment">
-            <code>1847</code> &middot; one railway time.
-          </p>
+          <p><code>1847</code> &middot; one railway time.</p>
           <aside class="notes">
             <p>
               Then we invented trains. Take a two-hour journey from London to
@@ -351,9 +354,10 @@
               sync with the local time by nine minutes.
             </p>
             <p>
-              In 1847, British railways agreed to use Greenwich Mean Time at
-              every station, wherever it sat. Local solar time was gone for
-              everyone except Greenwich, and other countries followed.
+              In 1847, British railways began standardising around Greenwich
+              Mean Time, wherever the station sat. Adoption spread across
+              companies and public clocks from there, and other countries
+              followed.
             </p>
           </aside>
         </section>
@@ -368,8 +372,8 @@
               enough for five zones but uses one. India is offset by half
               an hour. Nepal by forty-five minutes. Spain sits on the
               same meridian as Britain but reads its clocks an hour
-              ahead, because Franco aligned with Berlin in 1940 and
-              nobody moved it back.
+              ahead, it shifted to Central European Time during the Franco era
+              and never moved back.
             </p>
             <p>
               Time zones look like geography, but they're really
@@ -408,18 +412,18 @@
           </aside>
         </section>
         <section class="lie">
-          <pre><code class="language-ruby" data-trim>
-          tz = TZInfo::Timezone.get("America/Asuncion")
-          tz.utc_to_local(Time.utc(2025, 7, 1, 12, 0, 0))
-          </code></pre>
-          <p>
-            <code>2025-07-01 08:00:00</code>
-            &nbsp;<small class="muted">old tzinfo</small>
-          </p>
-          <p class="fragment">
-            <code>2025-07-01 09:00:00</code>
-            &nbsp;<small class="muted">recent tzinfo</small>
-          </p>
+          <div class="code-group">
+            <pre><code class="language-ruby" data-trim>
+            tz = TZInfo::Timezone.get("America/Asuncion")
+            tz.utc_to_local(Time.utc(2025, 7, 1, 12, 0, 0))
+            </code></pre>
+            <div class="tz-results">
+              <code>2025-07-01 08:00:00</code>
+              <small class="muted">old tzinfo</small>
+              <code class="fragment" data-fragment-index="1">2025-07-01 09:00:00</code>
+              <small class="muted fragment" data-fragment-index="1">recent tzinfo</small>
+            </div>
+          </div>
           <aside class="notes">
             <p>
               But as everything in computing, you need to keep your dependencies
@@ -536,8 +540,8 @@
         </section>
         <section class="lie">
           <pre><code class="language-ruby" data-trim>
-            Time.parse("2026-05-29 09:00:00")
-            # => 2026-05-29 09:00:00 +0200
+            Time.parse("2026-07-24 09:00:00")
+            # => 2026-07-24 09:00:00 +0200
           </code></pre>
           <aside class="notes">
             <p>
@@ -553,8 +557,8 @@
           <pre><code class="language-ruby" data-trim>
             Time.zone = "UTC"
 
-            Time.zone.parse("2026-05-29 09:00:00")
-            # => 2026-05-29 09:00:00 UTC
+            Time.zone.parse("2026-07-24 09:00:00")
+            # => 2026-07-24 09:00:00 UTC
           </code></pre>
           <aside class="notes">
             <p>
@@ -647,9 +651,23 @@
           </code></pre>
           <aside class="notes">
             <p>
-              And it gets worse. If you use <code>Time.zone.parse</code>, it
-              picks one of the two times for you, silently, without raising
-              anything. You just have to hope it picked the one you meant.
+              Here are the same two inputs through
+              <code>Time.zone.parse</code>. The spring-forward case that didn't
+              exist, and the fall-back case that happened twice. Rails gives you
+              a result for both, without raising, and without telling you it had
+              to choose.
+            </p>
+          </aside>
+        </section>
+        <section class="lie moment">
+          <p>TZInfo raises.</p>
+          <p><code>Time.zone.parse</code> resolves silently.</p>
+          <aside class="notes">
+            <p>
+              The two APIs handle this differently. TZInfo raises when you ask
+              for a time that didn't happen or one that happened twice.
+              <code>Time.zone.parse</code> takes the same input, picks one, and
+              returns it with no warning.
             </p>
           </aside>
         </section>
@@ -659,10 +677,9 @@
           <p>Rare, but let it raise, don't let it guess.</p>
           <aside class="notes">
             <p>
-              I'll be honest, this is an edge case. Most apps will never hit it,
-              and you don't need to defend every call against it. But it's real,
-              it happens twice a year, and <code>Time.zone.parse</code> will
-              quietly pick a side for you.
+              This is an edge case. Most apps will never hit it, and you don't
+              need to defend every call against it. But it's real, and it
+              happens twice a year.
             </p>
             <p>
               Our feature is mostly safe here, unless we set a notification
@@ -670,16 +687,14 @@
               unlucky.
             </p>
             <p>
-              The only thing I would say is it's probably better to rely on the
-              method <code>local_time</code> from TZInfo. At least it will
-              loudly raise if something goes wrong instead of providing wrong
-              data silently.
+              When you do need to handle a user's wall-clock time, reach for
+              <code>local_time</code> instead.
             </p>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 6</span>
-          <h3>JSON and the database preserve your time</h3>
+          <h3>JSON and databases preserve your time</h3>
           <aside class="notes">
             <p>
               Lie number six. You did the work in Ruby. You used
@@ -719,17 +734,19 @@
               string for a valid time.
             </p>
             <p>
-              You can see we moved from 9 o'clock to 8 o'clock, but it's just
-              the UTC conversion.
+              We moved from 9 o'clock to 8, but that's just the UTC conversion.
             </p>
             <p>
-              Actually, the UTC conversion just made you lose the only piece of
-              context you had. Now there's no way to remember the time zone
-              offset.
+              What we actually lost is the offset. The string had
+              <code>+01:00</code>, the JSON doesn't. And the offset was never a
+              full time zone in the first place — <code>+01:00</code> could be
+              Europe/London in summer, Africa/Lagos year-round, or any number
+              of other rule sets. The small hint we had is gone, and even the
+              hint wasn't the whole picture.
             </p>
             <p>
-              We better hope the app that consumes our sunrise time feature
-              remembers the time zone because the information is lost.
+              If the consumer needs the user's civil zone, the IANA name has
+              to travel separately, in its own field.
             </p>
           </aside>
         </section>
@@ -757,26 +774,17 @@
           <p>SQLite: no datetime type</p>
           <aside class="notes">
             <p>
-              If you need to store the time and keep the zone, you have
-              to store them separately.
+              The biggest trap is PostgreSQL's <code>timestamptz</code>. The
+              name reads like it carries a zone, but it doesn't. The value gets
+              normalised to UTC on the way in, and comes back in the session's
+              time zone, without the IANA name it arrived with. MySQL has the
+              same problem in two flavours: <code>DATETIME</code> ignores zones
+              entirely, <code>TIMESTAMP</code> converts through the session
+              zone. SQLite doesn't even have a datetime type.
             </p>
             <p>
-              PostgreSQL's <code>timestamptz</code> stores an instant, just the
-              moment, normalised to UTC. The name is misleading, nothing about
-              the zone survives the round-trip.
-            </p>
-            <p>
-              MySQL has two types: <code>datetime</code> stores calendar fields
-              with no zone at all, and <code>timestamp</code> converts through
-              the session zone but only covers a limited range.
-            </p>
-            <p>
-              SQLite has no datetime type at all, so you store a string or an
-              integer and handle the zone yourself.
-            </p>
-            <p>
-              If the zone matters, store it next to the instant, with
-              the IANA name in its own column.
+              If the zone matters to your domain, store it next to the instant,
+              with the IANA name in its own column.
             </p>
           </aside>
         </section>
@@ -811,8 +819,8 @@
             </p>
             <p>
               Now, this is probably not something that would bother us
-              programmers but I still wanted to mention it. We use a mean solar
-              time in two manners: to define the length of a day, and to define
+              programmers but I still wanted to mention it. We use mean solar
+              time in two ways: to define the length of a day, and to define
               the hours on the clock.
             </p>
           </aside>
@@ -877,24 +885,25 @@
           </aside>
         </section>
         <section class="toolkit toolkit--bad">
-          <span class="chip">Don't</span>
+          <span class="chip">Not the source of truth</span>
           <pre><code class="language-ruby" data-trim>
           t.datetime :next_sunrise_at
           </code></pre>
           <aside class="notes">
             <p>
-              Don't store the sunrise. Don't store the time at all. The user
-              can move countries, experience DST and the sunrise time would be
-              wrong.
+              The trap is making the computed time the thing you go back to
+              when you need the answer. The user moves country, DST shifts, and
+              the value you stored is wrong, with nothing telling you it is.
             </p>
             <p>
-              In some cases, you'll want to store the inputs that produce a
-              result, rather than the result itself.
+              Storing a computed time is fine in plenty of places. A cache, an
+              audit of what you showed or sent, the <code>run_at</code> on a
+              queued job. Just not as the truth.
             </p>
           </aside>
         </section>
         <section class="toolkit toolkit--good">
-          <span class="chip">Do</span>
+          <span class="chip">Source of truth</span>
           <pre><code class="language-ruby" data-trim>
           t.decimal :latitude
           t.decimal :longitude
@@ -902,9 +911,9 @@
           </code></pre>
           <aside class="notes">
             <p>
-              Store the intent: where the user is, and which zone they read time
-              in. Then compute the sunrise when you actually need it. A latitude
-              and longitude don't change when DST does.
+              The truth is the inputs that produce the answer. Where the user
+              is, and which zone they read time in. Compute the sunrise when
+              you actually need it. Coordinates don't drift when DST does.
             </p>
           </aside>
         </section>
@@ -913,9 +922,50 @@
           <p>Compute the answer.</p>
           <aside class="notes">
             <p>
-              If you need to set a recurring reminder or send a delayed
-              notification, it's better to store the parameters and compute the
-              result when you actually need it.
+              For a recurring reminder or a delayed notification, store the
+              parameters and compute the result when you need it.
+            </p>
+            <p>
+              Cache the answer if you want, but only when you know when to
+              throw it away.
+            </p>
+          </aside>
+        </section>
+        <section class="toolkit toolkit--code">
+          <span class="chip">Compute</span>
+          <pre><code class="language-ruby" data-trim>
+          def next_sunrise_for(location, zone)
+            tz = TZInfo::Timezone.get(zone)
+            tomorrow = tz.utc_to_local(Time.now.utc).to_date + 1
+
+            local = Astronomy.local_sunrise_time(date: tomorrow, location:)
+            return nil unless local
+
+            tz.local_time(
+              tomorrow.year, tomorrow.month, tomorrow.day,
+              local.hour, local.minute, local.second
+            )
+          end
+          </code></pre>
+          <aside class="notes">
+            <p>
+              We get the zone from its IANA name. That's how we know which date
+              tomorrow is for the user, and how we label the result.
+            </p>
+            <p>
+              <code>Time.now.utc</code> is the current moment. The zone turns
+              it into a local date, and we add one calendar day. That's
+              tomorrow where the user lives.
+            </p>
+            <p>
+              The astronomy call takes coordinates and a date and returns a
+              local sunrise time for that location. The contract is in the name,
+              so a reader can't mistake it for a UTC instant. It can also return
+              nil, in the far north and far south, some days have no sunrise,
+              and we keep that.
+            </p>
+            <p>
+              Then we label the time with the user's zone.
             </p>
           </aside>
         </section>
@@ -961,61 +1011,68 @@
             </p>
           </aside>
         </section>
+        <section class="toolkit moment">
+          <span class="chip">Ask first</span>
+          <p>Is this an instant?</p>
+          <p>Is this a local time?</p>
+          <p>Is this a recurring intention?</p>
+          <p>Who owns the zone?</p>
+          <aside class="notes">
+            <p>
+              Name what you have before you pick a method. The same datetime
+              column can mean an instant, a clock time, or a recurring
+              intention, and each one wants a different tool.
+            </p>
+          </aside>
+        </section>
         <section class="toolkit">
           <span class="chip">The checklist</span>
           <table>
             <tr>
-              <td>Instant?</td>
-              <td>Store a UTC instant</td>
-            </tr>
-            <tr>
-              <td>Zone matters?</td>
-              <td>Store the IANA name separately</td>
-            </tr>
-            <tr>
-              <td>Current time?</td>
+              <td>Now</td>
               <td><code>Time.current</code></td>
             </tr>
             <tr>
-              <td>Today?</td>
+              <td>Today</td>
               <td><code>Date.current</code></td>
             </tr>
             <tr>
-              <td>Calendar math?</td>
+              <td>Calendar math</td>
               <td>
                 <code>1.day</code>, <code>advance</code>, <code>change</code>
               </td>
             </tr>
             <tr>
-              <td>Machine input?</td>
-              <td>Require ISO 8601 with an offset</td>
+              <td>Machine input</td>
+              <td>ISO 8601 with an offset</td>
             </tr>
             <tr>
-              <td>Trusted app-zone string?</td>
+              <td>Trusted app-zone string</td>
               <td><code>Time.zone.parse</code></td>
             </tr>
             <tr>
-              <td>User wall time?</td>
-              <td>
-                <code>tz.local_time</code>; handle gaps &amp; overlaps
-              </td>
+              <td>User wall time</td>
+              <td><code>tz.local_time</code></td>
             </tr>
             <tr>
-              <td>Schedule?</td>
+              <td>Store the zone</td>
+              <td>IANA name, its own column</td>
+            </tr>
+            <tr>
+              <td>Schedule</td>
               <td>Store intent. Compute the instant.</td>
             </tr>
             <tr>
-              <td>Test?</td>
+              <td>Test</td>
               <td><code>travel_to</code> an evil date</td>
             </tr>
           </table>
           <aside class="notes">
             <p>
-              I guess if there's one slide to keep with you, it would be this
-              one. If you're an experienced developer you probably already use
-              most of these techniques because they became best practices. But
-              I wanted to remind why it's important to follow them and what
-              could happen otherwise.
+              If there's one slide to keep with you, it's this one. If you're
+              an experienced developer you probably already use most of these
+              because they became best practices, but I wanted to remind why
+              they matter and what happens otherwise.
             </p>
           </aside>
         </section>
@@ -1080,7 +1137,7 @@
       Reveal.initialize({
         hash: true,
         controls: false,
-        transition: 'slide',
+        transition: 'none',
         plugins: [RevealHighlight, RevealNotes]
       });
     </script>

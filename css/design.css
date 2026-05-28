@@ -135,6 +135,45 @@
   margin-right: auto;
 }
 
+/* Group container for slides where a <pre> sits next to a follow-up block
+   (e.g. .tz-results). Each sibling would otherwise center independently and
+   end up with different left edges. `width: max-content` shrinks the group
+   to the widest child; `margin: 0 auto` centers that block on the slide;
+   `text-align: left` gives every child the same left edge inside it.
+   The bar lives on the group itself rather than the section edge, so it
+   stays flush against the content no matter where the group lands.
+   NOTE: class name avoids `.stack` because reveal.js owns that globally
+   with !important rules (margin:0, padding:0, height:100%). */
+.reveal .code-group {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-left: 1.2em;
+  text-align: left;
+  box-sizing: border-box;
+  border-left: 4px solid var(--lie);
+  border-radius: 2px;
+}
+
+.reveal section.truth .code-group {
+  border-left-color: var(--truth);
+}
+
+/* Suppress the section's edge bar on .code-group slides so there's only
+   one bar — the one travelling with the content. */
+.reveal section.lie:not(.moment):has(.code-group)::before,
+.reveal section.truth:not(.moment):has(.code-group)::before {
+  display: none;
+}
+
+/* Shrink code font inside .code-group so the longest line fits within the
+   canvas with room left over — otherwise the wrapper hits max-width: 100%
+   and auto-margin centering has no space to act. */
+.reveal .code-group pre code {
+  font-size: 0.8em;
+}
+
 /* Bar is bound to the section's natural height (top: 0; bottom: 0). A fixed
    height would overflow the section on short slides, which throws off
    reveal's vertical-centering measurement. Bar height = section height, so
@@ -257,12 +296,18 @@
 }
 
 .reveal section.moment p {
-  font-size: 2.1em;
+  font-size: 1.85em;
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.15;
   max-width: 22ch;
   margin: 0 auto;
+}
+
+/* Sibling paragraphs on moment slides need breathing room so the inline
+   <code> pills on adjacent lines don't overlap vertically. */
+.reveal section.moment p + p {
+  margin-top: 0.4em;
 }
 
 .reveal section.moment::before {
@@ -292,13 +337,10 @@
   display: none;
 }
 
-/* Inline <code> on moment slides drops the grey pill. At hero-statement
-   size the pill reads as a button/chip and fights the typography; the
-   mono font is enough to mark it as code. */
+/* Inline <code> on moment slides keeps the grey pill so the API call reads
+   as code (matching how it appears on non-moment slides). Font-size is
+   inherited so it scales with the surrounding hero text. */
 .reveal section.moment p code {
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
   font-size: inherit;
 }
 
@@ -464,6 +506,24 @@
 
 .reveal section.toolkit table {
   margin: 0 auto;
+}
+
+/* Long-code toolkit slides. The default 960×700 reveal canvas is 4:3-ish,
+   so on a 16:9 viewport the canvas is letterboxed — content anchored to the
+   canvas's left edge still sits ~10% inside the viewport. We need a reading
+   edge, not the canvas edge, so we pull the <pre> past the canvas with a
+   negative left margin. The page background matches the canvas, so the
+   bleed reads as extra horizontal room rather than overflow. Font shrinks
+   slightly so the widest line clears the canvas instead of clipping. */
+.reveal section.toolkit--code pre {
+  width: max-content;
+  margin: 0 0 0 -8%;
+  padding-left: 0;
+  text-align: left;
+}
+
+.reveal section.toolkit--code pre code {
+  font-size: 0.82em;
 }
 
 .reveal section.toolkit table td:first-child {
@@ -639,6 +699,18 @@
 .reveal section.hook--reveal p:first-of-type {
   font-variant-numeric: tabular-nums;
 }
+
+/* Two-column grid so the code output and its label each align in their own
+   column instead of each row centering independently. */
+.reveal .tz-results {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.6em;
+  row-gap: 0.4em;
+  align-items: center;
+  margin-top: 0.6em;
+}
+.reveal .tz-results small { justify-self: start; }
 
 /* Image placeholder — dashed box used until real artwork lands. */
 .reveal .placeholder-img {
