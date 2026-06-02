@@ -34,39 +34,6 @@
             </p>
           </aside>
         </section>
-        <section class="hook">
-          <p>What is &#127467;&#127479;'s UTC offset?</p>
-          <aside class="notes">
-            <p>
-              Before we start, I'd like to see if you're familiar with UTC.
-              Would you be able to say what's France's UTC offset?
-            </p>
-          </aside>
-        </section>
-        <section class="hook--reveal">
-          <ul class="offsets">
-            <li>UTC&minus;10:00</li>
-            <li>UTC&minus;09:30</li>
-            <li>UTC&minus;09:00</li>
-            <li>UTC&minus;08:00</li>
-            <li>UTC&minus;04:00</li>
-            <li>UTC&minus;03:00</li>
-            <li>UTC+01:00</li>
-            <li>UTC+03:00</li>
-            <li>UTC+04:00</li>
-            <li>UTC+05:00</li>
-            <li>UTC+11:00</li>
-            <li>UTC+12:00</li>
-          </ul>
-          <aside class="notes">
-            <p>
-              I can't really ask all of you but I'm pretty sure almost nobody
-              would have said this. France has 12 time zones if we include
-              oversea territories, that's more than any other country in the
-              world. So what time is it in France, really?
-            </p>
-          </aside>
-        </section>
         <section class="moment prologue newton">
           <div class="row">
             <img src="img/newton.jpg" alt="Sir Isaac Newton">
@@ -81,15 +48,23 @@
             </div>
           </div>
           <aside class="notes">
+            <p>Let's start with a bit of history</p>
             <p>
-              Alright, that was sneaky. Let's talk about history instead. We're
-              in the UK, surely we all know Sir Isaac Newton, born on 25
-              December 1642. What if I tell you he was actually born on 4
-              January 1643. Or, also born on this date. Depending on if you use
-              the Julian calendar that was used in Great Britain, or the
-              Gregorian calendar that was introduced by Pope Gregory the 13th in
-              1582 and fixed a gap of 10 days with nature. You see, lots of
-              things you know about time are just lies.
+              It is not documented if Isaac Newton ever went to Brighton but he
+              did live not so far from here.
+            </p>
+            <p>
+              He was born in England, on 25 December 1642. But, he was also born
+              on 4 January 1643.
+            </p>
+            <p>
+              Both dates are correct, the first is in the Julian calendar, still
+              used in Great Britain at the time, while the second is in the
+              Gregorian calendar, introduced by Pope Gregory the 13th in 1582
+              and fixed a gap of 10 days with nature.
+            </p>
+            <p>
+              Same day, different dates, and already a headache for historians.
             </p>
           </aside>
         </section>
@@ -165,9 +140,6 @@
         <section class="moment spine">
           <span class="chip">One reminder</span>
           <p>&ldquo;Remind me at 7am,<br>wherever I am.&rdquo;</p>
-          <p class="fragment">
-            Six lies stand between you and that one notification.
-          </p>
           <aside class="notes">
             <p>
               Keep one thing in mind for the whole talk. Just a reminder. The
@@ -834,22 +806,19 @@
         </section>
         <section class="truth moment">
           <span class="chip">Truth &#8470; 6</span>
-          <p>The clock is not the Sun.</p>
+          <p>Use Astronoby and Caelus.</p>
+          <p><small>TODO: link to Astronoby and Caelus</small></p>
           <aside class="notes">
-            <p>
-              If you are computing sunrise, sunset, prayer times, or the
-              position of anything in the sky, you can't get that from the
-              clock. You have to compute it from the Sun itself.
-            </p>
-            <p>
-              That's what a reminder before sunrise needs. The clock can't tell
-              you when sunrise is. You compute it from the Sun, and the clock
-              only labels the answer once you have it.
-            </p>
             <p>
               This is not code but I think it's good to know that a lot of the
               weird stuff we have to deal with related to time is just a
               reflection of nature's chaotic and beautiful side.
+            </p>
+            <p>
+              A little bit of shameless self-promotion: if you want to deal with
+              astronomical wonders in Ruby, check the <code>Astronoby</code>
+              Ruby gem and the <code>Caelus</code> project that I maintain with
+              a lot of love and passion for the Ruby community.
             </p>
           </aside>
         </section>
@@ -950,24 +919,6 @@
               for, 7am, in their zone. It's also the one call that raises on the
               DST gap, so if a user ever picks a time that doesn't exist or one
               that happens twice, you hear about it instead of guessing.
-            </p>
-          </aside>
-        </section>
-        <section class="toolkit">
-          <span class="chip">Testing</span>
-          <pre><code class="language-ruby" data-trim>
-          travel_to Time.utc(2026, 10, 25, 0, 30) do
-            # A 90,000-second day in London.
-          end
-          </code></pre>
-          <aside class="notes">
-            <p>
-              Test the difficult dates your clock can actually represent:
-              October 25, March 29, February 29, midnight on the day Paraguay
-              abolished daylight saving.
-            </p>
-            <p>
-              Tests are also meant to cover edge cases.
             </p>
           </aside>
         </section>
