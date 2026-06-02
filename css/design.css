@@ -286,6 +286,27 @@
   margin-top: 1em;
 }
 
+/* The 12 French UTC offsets, laid out as a grid so the sheer count lands
+   visually — the point is "look how many", not any single value. */
+.reveal section.hook--reveal .offsets {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 95%;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.7em 1.6em;
+  justify-content: center;
+  font-size: 1.25em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.reveal section.hook--reveal .offsets li {
+  color: var(--fg);
+}
+
 /* ---------- "Moment" slides ------------------------------------------- */
 /* For single-statement slides like "Use the object that means what you
    want." — the prose IS the slide. Drop the bar, center everything, scale
@@ -774,6 +795,50 @@
   max-width: none;
   margin: 0;
   font-size: 1.6em;
+}
+
+/* Newton: name is a quiet label, the two birth dates are the focus. The
+   Gregorian "actually born" date takes the red accent to land the twist,
+   and each calendar gets a small muted tag so the audience can tell them
+   apart without the speaker narrating. */
+.reveal section.newton .row img {
+  max-width: 32%;
+}
+
+.reveal section.newton .who {
+  flex: 1;
+}
+
+.reveal section.newton .name {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5em;
+}
+
+.reveal section.newton .date {
+  font-size: 2.1em;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  margin: 0.15em 0;
+}
+
+.reveal section.newton .date--alt {
+  color: var(--lie);
+}
+
+.reveal section.newton .date .cal {
+  display: inline-block;
+  margin-left: 0.5em;
+  font-size: 0.4em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  vertical-align: middle;
 }
 
 /* Tiny muted attribution / source caption under images. */
