@@ -163,14 +163,21 @@
           </aside>
         </section>
         <section class="moment spine">
-          <span class="chip">One feature</span>
-          <p>When does the Sun rise tomorrow<br>in your hometown?</p>
+          <span class="chip">One reminder</span>
+          <p>&ldquo;Remind me at 7am,<br>wherever I am.&rdquo;</p>
+          <p class="fragment">
+            Six lies stand between you and that one notification.
+          </p>
           <aside class="notes">
             <p>
-              Before anything, let's pick one feature. A weather app, a
-              prayer-time app, an astronomy app, it doesn't really matter. The
-              whole feature is one question: when does the Sun rise tomorrow in
-              your city?
+              Keep one thing in mind for the whole talk. Just a reminder. The
+              user says: remind me at 7 in the morning, wherever I am.
+            </p>
+            <p>
+              You've probably built something like this. A notification, a
+              recurring email, an alarm. And we're going to watch six
+              different lies about time get between you and sending that one
+              notification.
             </p>
           </aside>
         </section>
@@ -281,8 +288,8 @@
               matter.
             </p>
             <p>
-              For our sunrise feature, this means: tomorrow is not 86400 seconds
-              from now, it's one day from now.
+              For our reminder, this means tomorrow's 7am is one day from now,
+              not 86400 seconds from now.
             </p>
           </aside>
         </section>
@@ -463,10 +470,10 @@
               IANA name of the zone.
             </p>
             <p>
-              And you might need to. For our sunrise feature, this is where
-              latitude and longitude stop being enough. Because local time is
-              not tied to your coordinates on Earth but in which administration
-              you are.
+              And you might need to. Our reminder fires at 7am wherever the user
+              is, so we have to know which zone they read 7am in. Local time
+              isn't tied to your coordinates on Earth, it's tied to which
+              administration you're under.
             </p>
             <p>
               And of course, keep tzinfo current, because the database keeps
@@ -476,12 +483,13 @@
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 3</span>
-          <h3><code>Time.now</code> gives current time</h3>
+          <h3><code>Time</code> is the same everywhere it runs</h3>
           <aside class="notes">
             <p>
-              Lie number three. <code>Time.now</code>. The name says it
-              gives you the current time, and it does, but the current
-              time according to the machine, not according to your app.
+              Lie number three. Two methods we reach for constantly:
+              <code>Time.now</code> to get the current time, and
+              <code>Time.parse</code> to read a string. Both look like they'd
+              give the same answer on any machine, but neither does.
             </p>
           </aside>
         </section>
@@ -512,37 +520,9 @@
               different ones.
             </p>
             <p>
-              And that's the first thing to keep in mind for our feature.
-              Depending on how we build the time object, we could have the
-              sunrise time for the wrong day.
-            </p>
-          </aside>
-        </section>
-        <section class="truth moment">
-          <span class="chip">Truth &#8470; 3</span>
-          <p>
-            Ruby → <code>Time.now.utc</code>
-          </p>
-          <p>
-            Rails → <code>Time.current</code>
-          </p>
-          <aside class="notes">
-            <p>
-              In a Rails app, you should prefer <code>Time.current</code> as it
-              matches the zone you configured. Or you can use
-              <code>Time.now.utc</code> in plain Ruby and default to the
-              universal time.
-            </p>
-          </aside>
-        </section>
-        <section class="lie">
-          <span class="chip">Lie &#8470; 4</span>
-          <h3><code>Time.parse</code> is reliable</h3>
-          <aside class="notes">
-            <p>
-              Lie number four. <code>Time.parse</code>. You give it a string and
-              you get a time back. That sounds reliable, but look at what it
-              does with this string.
+              And that's one thing to keep in mind for our reminder. Depending
+              on how we build the time object, we could fire it on the wrong
+              day.
             </p>
           </aside>
         </section>
@@ -560,30 +540,27 @@
             </p>
           </aside>
         </section>
-        <section class="truth">
-          <span class="chip">Truth &#8470; 4</span>
-          <pre><code class="language-ruby" data-trim>
-            Time.zone = "UTC"
-
-            Time.zone.parse("2026-07-24 09:00:00")
-            # => 2026-07-24 09:00:00 UTC
-          </code></pre>
+        <section class="truth moment">
+          <span class="chip">Truth &#8470; 3</span>
+          <p><code>Time.now</code> &rarr; <code>Time.current</code></p>
+          <p><code>Time.parse</code> &rarr; <code>Time.zone.parse</code></p>
+          <p class="fragment">Plain Ruby &rarr; <code>Time.now.utc</code></p>
           <aside class="notes">
             <p>
-              The important part is who owns the fallback.
-              <code>Time.parse</code> falls back to whatever the host machine is
-              set to. <code>Time.zone.parse</code> falls back to the zone
-              <em>your application</em> declared. It still makes an assumption,
-              but this time it's one you control.
+              It's the same fix for both. The core methods fall back to whatever
+              the host machine is set to, but <code>Time.current</code> and
+              <code>Time.zone.parse</code> will fall back to the zone
+              <em>your application</em> declared. In plain Ruby,
+              <code>Time.now.utc</code> is a great default.
             </p>
           </aside>
         </section>
         <section class="lie">
-          <span class="chip">Lie &#8470; 5</span>
+          <span class="chip">Lie &#8470; 4</span>
           <h3>1:30 AM happens once</h3>
           <aside class="notes">
             <p>
-              Lie number five. 1:30 in the morning happens once a day, just like
+              Lie number four. 1:30 in the morning happens once a day, just like
               every other minute. Except there's a day where it happens twice,
               and a day where it doesn't happen at all.
             </p>
@@ -680,7 +657,7 @@
           </aside>
         </section>
         <section class="truth">
-          <span class="chip">Truth &#8470; 5</span>
+          <span class="chip">Truth &#8470; 4</span>
           <p>Twice a year, a clock time is missing or doubled.</p>
           <p>Rare, but let it raise, don't let it guess.</p>
           <aside class="notes">
@@ -690,9 +667,9 @@
               happens twice a year.
             </p>
             <p>
-              Our feature is mostly safe here, unless we set a notification
-              based on a few hours before sunrise, but that would be very
-              unlucky.
+              Our reminder mostly dodges this, unless the user picks a time
+              right in the gap, like 1:30 in the morning. That's rare, but it
+              can happen.
             </p>
             <p>
               When you do need to handle a user's wall-clock time, reach for
@@ -701,11 +678,11 @@
           </aside>
         </section>
         <section class="lie">
-          <span class="chip">Lie &#8470; 6</span>
+          <span class="chip">Lie &#8470; 5</span>
           <h3>JSON and databases preserve your time</h3>
           <aside class="notes">
             <p>
-              Lie number six. You did the work in Ruby. You used
+              Lie number five. You did the work in Ruby. You used
               <code>Time.zone</code>, you handled DST, your tests pass. Now you
               need to send it somewhere, a JSON response or store it in a
               database column. That's where you can lose what you just built.
@@ -759,7 +736,7 @@
           </aside>
         </section>
         <section class="truth moment">
-          <span class="chip">Truth &#8470; 6</span>
+          <span class="chip">Truth &#8470; 5</span>
           <p>Outside Ruby objects, don't forget the zone.</p>
           <aside class="notes">
             <p>
@@ -797,14 +774,19 @@
           </aside>
         </section>
         <section class="lie">
-          <span class="chip">Lie &#8470; 7</span>
+          <span class="chip">Lie &#8470; 6</span>
           <h3>Noon is when the Sun is highest</h3>
           <aside class="notes">
             <p>
-              Lie number seven, and this one is just a little bonus to get some
-              wonder. When the clock strikes twelve, you look up, and the Sun is
-              at its highest point. That's the definition of noon. But on most
-              days, it isn't true.
+              Lie number six. Until now our reminder fired at 7am, a number the
+              user gave us. But some reminders don't work that way. What if what
+              the user really wants is to be woken up at sunrise? Now the time
+              itself has to be computed from the sky.
+            </p>
+            <p>
+              And the sky doesn't care about your watch. When your watch says
+              twelve, you look up, expecting the Sun at its highest point.
+              That's the definition of noon. But on most days, it isn't true.
             </p>
           </aside>
         </section>
@@ -826,10 +808,10 @@
               for part of the year and a bit slow for the rest.
             </p>
             <p>
-              Now, this is probably not something that would bother us
-              programmers but I still wanted to mention it. We use mean solar
-              time in two ways: to define the length of a day, and to define
-              the hours on the clock.
+              We use mean solar time in two ways: to define the length of a day,
+              and to define the hours on the clock. Both are an average. While a
+              clock time happens **almost** every day at the same moment, keep
+              in mind this is just a human construction.
             </p>
           </aside>
         </section>
@@ -851,7 +833,7 @@
           </aside>
         </section>
         <section class="truth moment">
-          <span class="chip">Truth &#8470; 7</span>
+          <span class="chip">Truth &#8470; 6</span>
           <p>The clock is not the Sun.</p>
           <aside class="notes">
             <p>
@@ -860,8 +842,9 @@
               clock. You have to compute it from the Sun itself.
             </p>
             <p>
-              That's what our sunrise feature does. The clock only labels the
-              answer once we have it.
+              That's what a reminder before sunrise needs. The clock can't tell
+              you when sunrise is. You compute it from the Sun, and the clock
+              only labels the answer once you have it.
             </p>
             <p>
               This is not code but I think it's good to know that a lot of the
@@ -878,24 +861,24 @@
               Alright, this was it.
             </p>
             <p>
-              Seven lies is a lot to remember. So here is what to actually keep.
+              Six lies is a lot to remember. So here is what to actually keep.
             </p>
           </aside>
         </section>
         <section class="toolkit">
-          <p>Back to the sunrise.</p>
+          <p>Back to the reminder.</p>
           <aside class="notes">
             <p>
-              Remember our one feature: when does the Sun rise tomorrow in your
-              city? We've spent seven lies watching that question break. Let's
-              actually build it now.
+              Notify the user at 7am, wherever they are. We've spent six lies
+              watching that one notification possibly break. Let's try to build
+              it correctly.
             </p>
           </aside>
         </section>
         <section class="toolkit toolkit--bad">
           <span class="chip">Not the source of truth</span>
           <pre><code class="language-ruby" data-trim>
-          t.datetime :next_sunrise_at
+          t.datetime :next_reminder_at
           </code></pre>
           <aside class="notes">
             <p>
@@ -913,15 +896,15 @@
         <section class="toolkit toolkit--good">
           <span class="chip">Source of truth</span>
           <pre><code class="language-ruby" data-trim>
-          t.decimal :latitude
-          t.decimal :longitude
-          t.string  :time_zone
+          t.time   :remind_at
+          t.string :time_zone
           </code></pre>
           <aside class="notes">
             <p>
-              The truth is the inputs that produce the answer. Where the user
-              is, and which zone they read time in. Compute the sunrise when
-              you actually need it. Coordinates don't drift when DST does.
+              The truth is the inputs that produce the answer. The local time
+              the user asked for, and which zone they read it in. We compute the
+              next fire time when we actually need it. It doesn't drift when DST
+              does.
             </p>
           </aside>
         </section>
@@ -942,16 +925,13 @@
         <section class="toolkit toolkit--code">
           <span class="chip">Compute</span>
           <pre><code class="language-ruby" data-trim>
-          def next_sunrise_for(location, zone)
+          def next_reminder_for(remind_at, zone)
             tz = TZInfo::Timezone.get(zone)
             tomorrow = tz.utc_to_local(Time.now.utc).to_date + 1
 
-            local = Astronomy.local_sunrise_time(date: tomorrow, location:)
-            return nil unless local
-
             tz.local_time(
               tomorrow.year, tomorrow.month, tomorrow.day,
-              local.hour, local.minute, local.second
+              remind_at.hour, remind_at.min, 0
             )
           end
           </code></pre>
@@ -966,14 +946,10 @@
               tomorrow where the user lives.
             </p>
             <p>
-              The astronomy call takes coordinates and a date and returns a
-              local sunrise time for that location. The contract is in the name,
-              so a reader can't mistake it for a UTC instant. It can also return
-              nil, in the far north and far south, some days have no sunrise,
-              and we keep that.
-            </p>
-            <p>
-              Then we label the time with the user's zone.
+              Then <code>local_time</code> builds the wall clock the user asked
+              for, 7am, in their zone. It's also the one call that raises on the
+              DST gap, so if a user ever picks a time that doesn't exist or one
+              that happens twice, you hear about it instead of guessing.
             </p>
           </aside>
         </section>
