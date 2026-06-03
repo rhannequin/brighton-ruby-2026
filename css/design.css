@@ -358,6 +358,35 @@
   display: none;
 }
 
+/* A `.mapping` moment is a compact before→after table (Truth #3's old→new
+   API calls). Lay the three pairs on one shared grid so the arrows line up:
+   left terms right-aligned against the arrow column, right terms left-aligned
+   away from it. Each row stays its own <p> and borrows the parent's columns
+   via subgrid so the three columns align across rows. */
+.reveal section.moment.mapping .map {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  justify-content: center;
+  margin-top: 0.6em;
+  row-gap: 0.45em;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.reveal section.moment.mapping .map p {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  column-gap: 0.5em;
+  margin: 0;
+  max-width: none;
+  line-height: 1.2;
+}
+
+.reveal section.moment.mapping .map p > :nth-child(1) { justify-self: end; }
+.reveal section.moment.mapping .map p > :nth-child(3) { justify-self: start; }
+
 /* Inline <code> on moment slides keeps the grey pill so the API call reads
    as code (matching how it appears on non-moment slides). Font-size is
    inherited so it scales with the surrounding hero text. */
@@ -377,6 +406,15 @@
   letter-spacing: -0.025em;
   line-height: 1.05;
   max-width: 18ch;
+}
+
+/* A headline sitting directly above supporting rows is a punchline, not a
+   standalone opener — shrink it so the rows fit beneath without crowding. */
+.reveal section.lie:not(.moment) h3:has(+ p),
+.reveal section.truth:not(.moment) h3:has(+ p) {
+  font-size: 1.8em;
+  max-width: none;
+  margin-bottom: 1em;
 }
 
 /* ---------- Speaker intro --------------------------------------------- */
@@ -692,6 +730,65 @@
   text-align: center;
 }
 
+/* ---------- Closing slide over the TARDIS photo ----------------------- */
+
+/* Full-bleed photo background; override reveal's vertical centering and
+   anchor an editorial caption to the bottom-left, in the dark sky region
+   so the text never fights the police box at centre. */
+.reveal .slides section.closing--tardis {
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 7% 8% 0;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Only switch to flex when the slide is actually on screen — reveal hides
+   the others with display:none, which this must not override. */
+.reveal .slides section.closing--tardis.present {
+  display: flex;
+}
+
+.reveal section.closing--tardis .closing-thanks {
+  font-family: var(--font-sans);
+  font-size: 3.2em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 4px 30px rgba(0, 0, 0, 0.65);
+}
+
+.reveal section.closing--tardis .contact {
+  display: flex;
+  align-items: center;
+  gap: 1.4em;
+  margin: 0.7em 0 0;
+  font-size: 0.62em;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: left;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.reveal section.closing--tardis .contact-logo {
+  display: flex;
+  align-items: center;
+}
+
+.reveal section.closing--tardis .contact-logo .logo {
+  height: 1.15em;
+  width: auto;
+  color: #fff;
+  display: block;
+  filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.6));
+}
+
 /* ---------- Reveal chrome --------------------------------------------- */
 
 /* Slide number, controls, progress — all subtle */
@@ -795,6 +892,36 @@
   max-width: none;
   margin: 0;
   font-size: 1.6em;
+}
+
+/* Closing bookend: mirror the prologue's sundial composition so the final
+   beat rhymes with the opening — same image, inverted message. Lives in the
+   epilogue so the starfield stays on. The lie-red lands on "We were",
+   marking who the liar actually was. */
+.reveal section.sky-return .row {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  text-align: left;
+}
+
+.reveal section.sky-return .row img {
+  max-width: 40%;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.reveal section.sky-return .row p {
+  flex: 1;
+  max-width: none;
+  margin: 0;
+  font-size: 2em;
+  line-height: 1.15;
+}
+
+.reveal section.sky-return .liar {
+  color: var(--lie);
 }
 
 /* Newton: name is a quiet label, the two birth dates are the focus. The
