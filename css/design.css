@@ -567,6 +567,14 @@
   margin: 0 auto;
 }
 
+/* The recommended format on the "showing time to humans" slide. The first
+   three lines are options; this one is the answer, so it takes the green
+   "truth" color — same color-only emphasis the deck uses elsewhere
+   (.liar, .date--alt) rather than a new boxed treatment. */
+.reveal section.toolkit p.pick code {
+  color: var(--truth);
+}
+
 /* Long-code toolkit slides. The default 960×700 reveal canvas is 4:3-ish,
    so on a 16:9 viewport the canvas is letterboxed — content anchored to the
    canvas's left edge still sits ~10% inside the viewport. We need a reading
@@ -592,6 +600,27 @@
   letter-spacing: 0.15em;
   font-size: 0.85em;
   width: 8em;
+}
+
+/* The checklist carries 9 rows — too many for the default row height on the
+   960×700 canvas (the last rows fall below the fold). Tighten the chip gap
+   and vertical cell padding so every row clears the canvas. */
+.reveal section.toolkit--checklist .chip {
+  margin-bottom: 0.4em;
+}
+
+.reveal section.toolkit--checklist table td {
+  padding-top: 0.45em;
+  padding-bottom: 0.45em;
+  white-space: nowrap;
+}
+
+/* Keep each label on a single line — the default 8em first column wraps the
+   longer titles ("Trusted app-zone string"). */
+.reveal section.toolkit--checklist table td:first-child {
+  width: auto;
+  white-space: nowrap;
+  padding-right: 1.6em;
 }
 
 /* ---------- Epilogue: quieter, starfield ------------------------------ */
