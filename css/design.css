@@ -680,46 +680,6 @@
   background-repeat: no-repeat;
 }
 
-/* Small sharp stars, distributed across the entire canvas. */
-.reveal .slides::after {
-  background-image:
-    radial-gradient(1px 1px at  4%  6%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at  9% 38%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 13% 71%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 17% 92%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 21% 14%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 26% 47%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 31% 83%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 36% 24%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 41% 58%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 46%  9%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 50% 95%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 55% 41%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 60% 73%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 65% 19%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 70% 56%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 74% 89%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 79% 33%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 84% 67%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 88%  3%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 92% 48%,  #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 96% 81%,  #fff 50%, transparent 51%);
-}
-
-/* Larger, softer stars layered behind for depth. */
-.reveal .slides::before {
-  background-image:
-    radial-gradient(2px 2px at 11% 22%, rgba(255,255,255,0.7) 30%, transparent 60%),
-    radial-gradient(2px 2px at 33% 64%, rgba(255,255,255,0.7) 30%, transparent 60%),
-    radial-gradient(2px 2px at 58% 18%, rgba(255,255,255,0.7) 30%, transparent 60%),
-    radial-gradient(2px 2px at 72% 86%, rgba(255,255,255,0.7) 30%, transparent 60%),
-    radial-gradient(2px 2px at 87% 42%, rgba(255,255,255,0.7) 30%, transparent 60%);
-}
-
-/* Switch the starfield on whenever any epilogue section is .present. */
-.reveal .slides:has(> section.epilogue.present)::after  { opacity: 0.65; }
-.reveal .slides:has(> section.epilogue.present)::before { opacity: 0.45; }
-
 /* ---------- Closing slides -------------------------------------------- */
 
 .reveal section.closing {
