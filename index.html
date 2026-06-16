@@ -24,9 +24,10 @@
           </div>
           <aside class="notes">
             <p>
-              Before we wrote any of this down, there was one clock: the sky.
+              The sky has been our clock for most of our history.
               The Sun told us when to wake up, when to plant, when to harvest.
-              Months came from the Moon cycles, and years from the Sun.
+              It gave us the concept of day and night, and the seasons, while we
+              imagined 12 months from the Moon cycles.
             </p>
             <p>Time was real and true. And then, it started to lie.</p>
           </aside>
@@ -43,13 +44,15 @@
           <aside class="notes">
             <p>Let's start with a bit of history</p>
             <p>
-              It is not documented if Isaac Newton ever went to Brighton but he
+              It is not documented if Isaac Newton ever went to Brighton, but he
               did live not so far from here.
             </p>
+            <hr>
             <p>
               He was born in England, on 25 December 1642. But did you know this
               lucky fellow had another birth date?
             </p>
+            <hr>
             <p>
               Both dates are correct, the first is in the Julian calendar,
               invented many centuries before and still used in Great Britain at
@@ -169,7 +172,8 @@
             <p>
               I love Ruby, and I also love astronomy, so I developed several
               tools and libs to have fun with time and space. You can find them
-              and anything I do on social medias with the handle @rhannequin.
+              and anything I do on GitHub and social medias with the handle
+              @rhannequin.
             </p>
             <p>
               I'm happy to talk with anyone after the presentation, even if it's
@@ -247,8 +251,8 @@
             <p>
               This way we can write<code> 24 dot hours</code> , which reads
               nicer than <code>86400</code>. But it does the same thing. Rails
-              expands <code>hours</code> as elapsed seconds, there is no
-              calendar math involved. And we still don't reach Monday.
+              expands the <code>hours</code> method as elapsed seconds, so there
+              is no calendar math involved. And we still don't reach Monday.
             </p>
           </aside>
         </section>
@@ -262,7 +266,7 @@
           </p>
           <aside class="notes">
             <p>
-              What's happening is that daylight saving time change will happen
+              What's happening is that daylight-saving-time-change will happen
               exactly on October 25 in the UK. The clocks here go back at 2 AM.
               The hour between 1 and 2 happens twice. So that day is 25 hours
               long. 90,000 seconds.
@@ -277,10 +281,10 @@
           </code></pre>
           <aside class="notes">
             <p>
-              Both<code> 24 dot hours </code>and<code> 1 dot day </code>are
+              Both <code> 24.hours </code> and <code> 1.day </code> are
               <code>ActiveSupport::Duration</code> objects, but they don't do
-              the same thing. With hours, the <em>addition</em> adds elapsed
-              seconds. With days, it moves the calendar.
+              the same thing. With hours, the <em>addition</em> adds a strict
+              duration in seconds. With days, it moves the calendar.
             </p>
           </aside>
         </section>
@@ -311,11 +315,17 @@
               Let's see a few examples.<code> + 1 dot month </code>knows the
               month ends on the 28th, so it lands there, not on February 31.
               <br>
-              <code> + 2 dot months </code>anchors back to the 31st.
+              In the same way, <code> + 2 dot months </code> reaches the end of
+              March, even if February and March don't have the same number of
+              days.
             </p>
             <p>
-              And<code> + 30 dot days </code>just counts days, ignoring the
-              month boundary entirely.
+              But <code> + 30 dot days </code> just counts days, ignoring the
+              month boundary entirely, because this duration has a different
+              meaning.
+            </p>
+            <p>
+              Again, this is all about semantics.
             </p>
           </aside>
         </section>
@@ -324,10 +334,11 @@
           <h3>Time zones are geography</h3>
           <aside class="notes">
             <p>
-              Lie number two. Time zones do look like geography. You take a
-              globe, you draw 24 vertical lines, and you call each strip a zone.
+              Lie number two. You know time zones, and they do look like
+              geography. You take a globe, you draw 24 vertical lines, and you
+              call each strip a zone.
             </p>
-            <p>But as you know, the real story is more complicated.</p>
+            <p>But you also know the real story is more complicated.</p>
           </aside>
         </section>
         <section class="lie">
@@ -340,15 +351,16 @@
           </p>
           <aside class="notes">
             <p>
-              Before 1840, every town set its own clock by the Sun. Noon was
-              when the Sun reached its highest point in the sky.
+              Before 1840, every town had its own clock related to the Sun. Noon
+              was when the Sun reached its highest point in the sky, as seen
+              from there.
               <br>
-              But at a given instant, the Sun is in a slightly different place
-              seen from Bristol than from Norwich.
+              But at a given instant, the Sun is in a different place everywhere
+              on Earth.
             </p>
             <p>
               So when London reads 12:00, Bristol reads 11:50. Brighton reads
-              11:59. Norwich reads 12:05. Local mean solar time.
+              11:59. And Norwich reads 12:05. This is local mean solar time.
             </p>
             <p>
               And it worked, because nobody could travel faster than the Sun
@@ -361,13 +373,13 @@
           <p><code>1847</code> &middot; one railway time.</p>
           <aside class="notes">
             <p>
-              Then we invented trains. On a journey from Bristol to London, your
-              clock would be nine minutes out of sync with the local time at
-              Bristol.
+              Then we invented trains. At the end of a journey from Bristol to
+              London, your clock would be nine minutes out of sync with the
+              local time in London.
             </p>
             <p>
-              So in 1847, British railways standardised on Greenwich Mean Time,
-              wherever the station was.
+              So in 1847, British railways standardised on Greenwich Mean Time
+              and train stations followed a single conventional time.
             </p>
             <p>
               And then, other entire countries followed.
@@ -444,9 +456,13 @@
             </p>
             <p>
               Did you know that Paraguay observed DST until late 2024, and then
-              abolished it in 2025? With the same code, you can have two
-              different answers, depending on whether your <code>tzinfo</code>
-              gem is recent enough to know about the time zone change.
+              abolished it in 2025?
+            </p>
+            <hr>
+            <p>
+              With the same code, you can have two different answers, depending
+              on whether your <code>tzinfo</code> gem is recent enough to know
+              about the time zone change.
             </p>
             <p>
               If it is out of date, your app is following time zone rules that
@@ -469,10 +485,15 @@
               IANA name of the zone.
             </p>
             <p>
-              And we do. Our reminder fires at 7am wherever the user is, so we
-              have to know which zone they read 7am in. Local time isn't tied to
-              your coordinates on Earth, it's tied to which administration
-              you're under.
+              The name itself isn't frozen either. IANA keeps the old names
+              working through backward-compatibility links, so a value you
+              stored years ago keeps resolving.
+            </p>
+            <p>
+              And we do need to store it. Our reminder fires at 7am wherever the
+              user is, so we have to know which zone they read 7am in. Local
+              time isn't tied to your coordinates on Earth, it's tied to which
+              administration you're under.
             </p>
           </aside>
         </section>
@@ -481,7 +502,7 @@
           <h3><code>Time</code> is the same everywhere it runs</h3>
           <aside class="notes">
             <p>
-              Lie number three. Two methods we reach for constantly:
+              Lie number three. There are two methods from the class <code>Time</code> that we reach for constantly:
               <code> Time dot now </code>to get the current time, and
               <code> Time dot parse </code>to read a string. Both look like they
               would be very predictable, right?
@@ -500,13 +521,13 @@
           </code></pre>
           <aside class="notes">
             <p>
-              My configuration says UTC, but<code> Time dot now </code>ignores
-              it.<code> Time dot now </code>reads the system clock and the
-              system zone, it doesn't look at your application config.
+              My configuration says UTC, but <code> Time.now </code> ignores it.
+              <code> Time.now </code>reads the system clock and the system zone,
+              it doesn't look at your application config.
             </p>
             <p>
               So when you ask the date on each of these objects, now you have
-              different ones.
+              different ones, coming from the same instant.
             </p>
           </aside>
         </section>
@@ -520,7 +541,11 @@
               Here as well, there is no <code>+2</code> time zone component in
               the input. It came from my laptop. If I deploy this code to a
               server in another zone, it returns a different value for the same
-              string. But once again we have a nice workaround in ActiveSupport.
+              string.
+            </p>
+            <p>
+              But hopefully, once again we have a nice workaround in
+              ActiveSupport.
             </p>
           </aside>
         </section>
@@ -545,11 +570,13 @@
           </div>
           <aside class="notes">
             <p>
-              It's the same fix for both. The core methods fall back to whatever
-              the host machine is set to, but<code> Time dot current </code>and
+              It's the same fix for both. <code> Time.current </code> and
               <code>Time.zone.parse</code> will fall back to the zone
-              <em>your application</em> declared. In plain Ruby,
-              <code> Time.now.utc </code>is a great default.
+              <em>your application</em> declared.
+            </p>
+            <p>
+              If you're just with standard Ruby, <code> Time.now.utc </code> is
+              a great default too.
             </p>
           </aside>
         </section>
@@ -558,9 +585,9 @@
           <h3>1:30 AM happens once</h3>
           <aside class="notes">
             <p>
-              Lie number four. 1:30 in the morning happens once a day, just like
-              every other minute. Except there's a day where it happens twice,
-              and a day where it doesn't happen at all.
+              Lie number four. We talked about daylight saving time already. But
+              there's one more side effect to it that you code is not going to
+              like.
             </p>
           </aside>
         </section>
@@ -840,8 +867,8 @@
               regular.
             </p>
             <p>
-              This is not code but I think it's good to know that a lot of the
-              weird stuff we have to deal with related to time is just a
+              I know this is not code but I think it's good to know that a lot
+              of the weird stuff we have to deal with related to time is just a
               reflection of nature's chaotic and beautiful side.
             </p>
           </aside>
@@ -883,9 +910,8 @@
           <aside class="notes">
             <p>
               The trap is making the computed time the thing you go back to when
-              you need the answer. If the user moves country or DST shifts, and
-              then the value you stored is wrong, with nothing telling you it
-              is.
+              you need the answer. If the user moves country or DST shifts, then
+              the value you stored is wrong, with nothing telling you it is.
             </p>
             <p>
               It's not wrong to store a computed time but it is important to
@@ -951,11 +977,12 @@
               for, 7am, where they will be.
             </p>
             <p>
-              We could add some error handling for the DST edge cases, because
-              that's where it could raise with ambiguous times.
+              If we want to be super cautious, we could also add some error
+              handling for the DST edge cases, ecause that's where it could
+              raise with ambiguous times.
             </p>
             <p>
-              And that's finally it.
+              And that's just it.
             </p>
           </aside>
         </section>
@@ -1077,8 +1104,8 @@
           <div class="row">
             <img src="img/sundial.jpg" alt="Sundial" />
             <p>
-              The sky was never lying.<br />
-              <span class="liar">We were.</span>
+              Time never lied.<br />
+              <span class="liar">We did.</span>
             </p>
           </div>
           <aside class="notes">
