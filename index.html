@@ -63,9 +63,9 @@
               Gregory 13 in 1582 and fixed a gap of 10 days with nature.
             </p>
             <p>
-              Same day, different dates, and already a headache for historians.
-              Today we are going to uncover other headaches about time and
-              hopefully some medicine too.
+              Same day, different dates. I empathise with historians. And today,
+              we are going to uncover a few traps we can fall into when we deal
+              with time in our code.
             </p>
           </aside>
         </section>
@@ -819,9 +819,9 @@
             <p>
               Lie number six. Until now our reminder fired at 7am, a number the
               user gave us. But some reminders don't work that way. What if what
-              the user really wants is to be notified at mid-day? Not noon,
-              mid-day, when the Sun is at its highest point in the sky. We're
-              going to see both are not necessarily the same thing.
+              the user really wants is to be notified at mid-day? Easy, that's
+              noon, right? No, the user meant mid-day, when the Sun reaches its
+              highest point in the sky. And that's almost never at 12 o'clock.
             </p>
           </aside>
         </section>
@@ -838,14 +838,14 @@
               apart, depending only on the day of the year.
             </p>
             <p>
-              This is called the equation of time and it exists because of the
-              Earth's orbit and axis. In short it means the Sun runs a bit fast
-              for part of the year and a bit slow for the rest.
+              This is called the equation of time and it exists because the
+              Earth's orbit is not a perfect circle. In short it means the Sun
+              runs a bit fast for part of the year and a bit slow for the rest.
             </p>
             <p>
-              Clock time is an average, mean solar time. It lines up with the
-              real Sun almost every day, but it's a human construction, not what
-              the sky is actually doing.
+              Clock time is an average, that's the "mean" in "mean solar time".
+              It lines up close enough with the real Sun, but it's a human
+              construction, not what actually happening up there.
             </p>
           </aside>
         </section>
@@ -978,7 +978,7 @@
             </p>
             <p>
               If we want to be super cautious, we could also add some error
-              handling for the DST edge cases, ecause that's where it could
+              handling for the DST edge cases, because that's where it could
               raise with ambiguous times.
             </p>
             <p>
@@ -1093,9 +1093,9 @@
             <p>
               Weirdly enough, even the Sun and the Moon don't always rise. If
               you live in the North of Norway or in Antarctica, there are days
-              without sun at all. And because the Moon's rising drifts about
-              fifty minutes every day, there are some local 24-hour windows that
-              just don't contain a moonrise.
+              without sun at all. And because the Moon's rising time drifts
+              about fifty minutes every day, there are some local 24-hour
+              windows that just don't contain a moonrise.
             </p>
             <p>Never trust your instincts about time.</p>
           </aside>
