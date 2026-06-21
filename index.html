@@ -455,8 +455,8 @@
               up-to-date.
             </p>
             <p>
-              Did you know that Paraguay observed DST until late 2024, and then
-              abolished it in 2025?
+              Did you know that Paraguay observed DST until late 2024 and then
+              abolished it?
             </p>
             <hr>
             <p>
@@ -806,7 +806,7 @@
             <p>
               The biggest trap is PostgreSQL's <code>timestamptz</code>. The
               name reads like it carries a zone, but it doesn't. The value gets
-              normalised to UTC on the way in, and comes back in the system's
+              normalised to UTC on the way in, and comes back in the session's
               time zone.
             </p>
             <p>
@@ -848,8 +848,9 @@
             </p>
             <p>
               This is called the equation of time and it exists because the
-              Earth's orbit is not a perfect circle. In short it means the Sun
-              runs a bit fast for part of the year and a bit slow for the rest.
+              Earth's orbit is not a perfect circle, and because its axis is
+              tilted. In short it means the Sun runs a bit fast for part of the
+              year and a bit slow for the rest.
             </p>
             <p>
               Clock time is an average, that's the "mean" in "mean solar time".
