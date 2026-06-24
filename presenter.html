@@ -23,13 +23,12 @@
             <p>For most of human history,<br />the only clock was the sky.</p>
           </div>
           <aside class="notes">
-            <p>
-              The sky has been our clock for most of our history.
-              The Sun told us when to wake up, when to plant, when to harvest.
-              It gave us the concept of day-and-night, and the seasons, while we
-              imagined 12 months from the Moon cycles.
-            </p>
-            <p>Time was real and true. And then, it started to lie.</p>
+            <ul>
+              <li>Sky = our clock for most of history</li>
+              <li>Sun told us: when to wake, plant, harvest</li>
+              <li>Gave us day/night + seasons; 12 months from Moon cycles</li>
+              <li>Time was real and true, then it started to lie</li>
+            </ul>
           </aside>
         </section>
         <section class="moment prologue newton">
@@ -42,28 +41,27 @@
             </div>
           </div>
           <aside class="notes">
-            <p>Let's start with a bit of history.</p>
+            <ul>
+              <li>Bit of history</li>
+            </ul>
             <hr>
-            <p>
-              Sir Isaac Newton was born in England, on 25 December 1642. But did
-              you know this lucky person had another birth date?
-            </p>
+            <ul>
+              <li>Newton born in England, 25 Dec 1642</li>
+              <li>Lucky person had another birth date?</li>
+            </ul>
             <hr>
-            <p>
-              Both dates are correct, the first is in the Julian calendar,
-              invented many centuries before and still used in Great Britain at
-              the time.
-            </p>
-            <p>
-              The second is in the Gregorian calendar, introduced by Pope
-              Gregory 13 in 1582. This calendar fixed a growing gap of 10 days
-              with nature.
-            </p>
-            <p>
-              Same day, but different dates. And historians have to deal with
-              this. Today, we are going to uncover a few traps we can fall into
-              when we deal with time in our code.
-            </p>
+            <ul>
+              <li>
+                Both correct: first is Julian calendar, centuries old, still
+                used in GB then
+              </li>
+              <li>
+                Second is Gregorian: Pope Gregory 13, 1582; fixed a 10-day gap
+                with nature
+              </li>
+              <li>Same day, different dates. Historians deal with this.</li>
+              <li>Today: uncover traps with time in our code</li>
+            </ul>
           </aside>
         </section>
         <section class="speaker">
@@ -162,46 +160,41 @@
             ></path>
           </svg>
           <aside class="notes">
-            <p>
-              So, I'm Rémy, I'm a senior developer at thoughtbot based in Paris.
-            </p>
-            <p>
-              I love Ruby, and I also love astronomy, so I developed several
-              tools and libs to have fun with time and space. You can find them
-              and anything I do on GitHub and social medias with the handle
-              @rhannequin.
-            </p>
-            <p>
-              I'm happy to talk with anyone after the presentation, even if it's
-              not related to astronomy of course.
-            </p>
+            <ul>
+              <li>Rémy, senior dev at thoughtbot, based in Paris</li>
+              <li>
+                Love Ruby + astronomy: built tools/libs for time and space
+              </li>
+              <li>GitHub + socials: @rhannequin</li>
+              <li>Happy to chat after, even non-astronomy</li>
+            </ul>
           </aside>
         </section>
         <section class="moment spine">
           <span class="chip">One reminder</span>
           <p>&ldquo;Remind me at 7am,<br />wherever I am.&rdquo;</p>
           <aside class="notes">
-            <p>Alright.</p>
-            <p>
-              Let's keep one thing in mind for the whole talk. Just a reminder
-              from a user: remind me at 7 in the morning, wherever I am.
-            </p>
-            <p>
-              You've probably built something like this. A notification, a
-              recurring email, an alarm. And we're going to watch six different
-              lies about time get between you and sending that one notification.
-            </p>
+            <ul>
+              <li>Keep one thing in mind for the whole talk</li>
+              <li>User's reminder: remind me at 7am, wherever I am</li>
+              <li>You've built this: notification, recurring email, alarm</li>
+              <li>
+                Six lies about time get between you and that one notification
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 1</span>
           <h3>A day is 24 hours</h3>
           <aside class="notes">
-            <p>
-              Lie number one. Everybody knows a day has 24 hours of 60 minutes
-              of 60 seconds. That's 86400 seconds.
-            </p>
-            <p>Let me show this is wrong.</p>
+            <ul>
+              <li>Lie number one</li>
+              <li>
+                Everybody knows: a day = 24h of 60min of 60s = 86400 seconds
+              </li>
+              <li>Let me show this is wrong</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -211,10 +204,12 @@
           # => Sun, 25 Oct 2026 00:30:00 BST +01:00
           </code></pre>
           <aside class="notes">
-            <p>
-              Let's pick a time. Half past midnight in Brighton, the morning of
-              a day in October. I am going to add a day to it.
-            </p>
+            <ul>
+              <li>
+                Pick a time: half past midnight in Brighton, a day in October
+              </li>
+              <li>Going to add a day to it</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -226,11 +221,11 @@
           # => Sun, 25 Oct 2026 23:30:00 GMT +00:00
           </code></pre>
           <aside class="notes">
-            <p>
-              We said 86400 seconds is exactly one day. But look closer at the
-              result. Sunday, October 25. This is still on the same day. We
-              added 24 hours and we did not reach Monday.
-            </p>
+            <ul>
+              <li>We said 86400 seconds is exactly one day</li>
+              <li>Look closer: still Sunday, October 25, same day</li>
+              <li>Added 24 hours and did not reach Monday</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -239,18 +234,21 @@
           # => Sun, 25 Oct 2026 23:30:00 GMT +00:00
           </code></pre>
           <aside class="notes">
-            <p>
-              So, let's just use Rails. A lot of us know it, ActiveSupport
-              monkey-patches the <code>Integer</code> class to add methods like
-              <code>hours</code> or <code>minutes</code>.
-            </p>
-            <p>
-              This way we can write <code> 24 dot hours </code> , which reads
-              nicer than the arbitrary <code>86400</code> number. But it does
-              the same thing. Rails expands the <code>hours</code> method as
-              elapsed seconds, so there is no calendar math involved. And we
-              still don't reach Monday.
-            </p>
+            <ul>
+              <li>
+                Let's use Rails: ActiveSupport monkey-patches
+                <code>Integer</code> with <code>hours</code>,
+                <code>minutes</code>
+              </li>
+              <li>
+                <code>24-dot-hours</code> reads nicer than arbitrary
+                <code>86400</code>
+              </li>
+              <li>
+                But same thing, expands to elapsed seconds, no calendar math
+              </li>
+              <li>Still don't reach Monday</li>
+            </ul>
           </aside>
         </section>
         <section class="lie moment">
@@ -262,12 +260,14 @@
             />
           </p>
           <aside class="notes">
-            <p>
-              What's happening is that daylight-saving-time-change will happen
-              exactly on October 25 in the UK. The clocks here go back at 2 AM.
-              The hour between 1 and 2 happens twice. So that day is 25 hours
-              long, or 90,000 seconds.
-            </p>
+            <ul>
+              <li>
+                Daylight-saving-time-change happens exactly on October 25 in
+                the UK
+              </li>
+              <li>Clocks go back at 2 AM, the hour 1 to 2 happens twice</li>
+              <li>So that day is 25 hours long, or 90,000 seconds</li>
+            </ul>
           </aside>
         </section>
         <section class="truth">
@@ -277,27 +277,29 @@
           # => Mon, 26 Oct 2026 00:30:00 GMT +00:00
           </code></pre>
           <aside class="notes">
-            <p>
-              Both <code> 24.hours </code> and <code> 1.day </code> are
-              <code>ActiveSupport::Duration</code> objects, but they don't do
-              the same thing. With the <code>hours</code> method, the
-              <em>addition</em> adds a strict duration in seconds. With the
-              <code>days</code> method, it moves the calendar.
-            </p>
+            <ul>
+              <li>
+                Both <code>24.hours</code> and <code>1.day</code> are
+                <code>ActiveSupport::Duration</code>, but differ
+              </li>
+              <li><code>hours</code>: adds a strict duration in seconds</li>
+              <li><code>days</code>: moves the calendar</li>
+            </ul>
           </aside>
         </section>
         <section class="truth moment">
           <p>Use the object that means what you want.</p>
           <aside class="notes">
-            <p>
-              One of the main things to remember from the few minutes we have
-              together is to use the object that means what you want. Semantics
-              matter.
-            </p>
-            <p>
-              For our reminder, this means tomorrow's 7am is one <em>day</em>
-              from now, not 86400 seconds from now.
-            </p>
+            <ul>
+              <li>
+                Main thing to remember: use the object that means what you want
+              </li>
+              <li>Semantics matter</li>
+              <li>
+                Our reminder: tomorrow's 7am is one <em>day</em> from now, not
+                86400 seconds
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="truth">
@@ -309,34 +311,35 @@
           jan_31 + 30.days   # => Mon, 02 Mar 2026
           </code></pre>
           <aside class="notes">
-            <p>
-              Let's see a few examples.<code> + 1 dot month </code>knows the
-              month ends on the 28th, so it lands there, not on February 31.
-              <br>
-              In the same way, <code> + 2 dot months </code> reaches the end of
-              March, even if February and March don't have the same number of
-              days.
-            </p>
-            <p>
-              But <code> + 30 dot days </code> just counts days, ignoring the
-              month boundary entirely, because this duration has a different
-              meaning.
-            </p>
-            <p>
-              Again, this is all about semantics.
-            </p>
+            <ul>
+              <li>
+                <code>+ 1.month</code> knows the month ends on the 28th, lands
+                there, not Feb 31
+              </li>
+              <li>
+                <code>+ 2.months</code> reaches end of March, even though Feb
+                and March differ
+              </li>
+              <li>
+                <code>+ 30.days</code> just counts days, ignoring the month
+                boundary, different meaning
+              </li>
+              <li>Again, all about semantics</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 2</span>
           <h3>Time zones are geography</h3>
           <aside class="notes">
-            <p>
-              Lie number two. You know time zones, and they do look like
-              geography. You take a globe, you draw 24 vertical lines, and you
-              call each strip a zone.
-            </p>
-            <p>Easy.</p>
+            <ul>
+              <li>Lie number two</li>
+              <li>You know time zones, they look like geography</li>
+              <li>
+                Take a globe, draw 24 vertical lines, call each strip a zone
+              </li>
+              <li>Easy</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -348,42 +351,35 @@
             Norwich &middot; <code>12:05</code>
           </p>
           <aside class="notes">
-            <p>
-              Before 1840, every town had its own clock related to the Sun. Noon
-              was when the Sun reached its highest point in the sky, as seen
-              from there.
-              <br>
-              But at a given instant, the Sun is seen in a different place
-              everywhere on Earth.
-            </p>
-            <p>
-              So when London reads 12:00, Bristol reads 11:50. Brighton reads
-              11:59. And Norwich reads 12:05. This is called
-              <em>local solar time</em>.
-            </p>
-            <p>
-              And it worked, because nobody could travel faster than the Sun
-              moved.
-            </p>
+            <ul>
+              <li>Before 1840, every town had its own clock from the Sun</li>
+              <li>Noon = Sun at its highest point, as seen from there</li>
+              <li>
+                At a given instant, the Sun is seen in a different place
+                everywhere on Earth
+              </li>
+              <li>
+                London 12:00 → Bristol 11:50, Brighton 11:59, Norwich 12:05
+              </li>
+              <li>Called <em>local solar time</em></li>
+              <li>Worked because nobody traveled faster than the Sun moved</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <p>Then we invented trains.</p>
           <p><code>1847</code> &middot; one railway time.</p>
           <aside class="notes">
-            <p>
-              Then we invented trains. At the end of a journey from Bristol to
-              London, your clock would be nine minutes out of sync with the
-              local time in London.
-            </p>
-            <p>
-              So in 1847, British railways standardised on the Greenwich Mean
-              Time, or GMT, and train stations followed a single conventional
-              time.
-            </p>
-            <p>
-              And then, other entire countries followed.
-            </p>
+            <ul>
+              <li>Then we invented trains</li>
+              <li>
+                Bristol → London: clock 9 minutes out of sync with London local
+              </li>
+              <li>
+                1847: British railways standardised on GMT, stations one time
+              </li>
+              <li>Then other entire countries followed</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -392,44 +388,45 @@
           </p>
           <p>Then politics drew the lines.</p>
           <aside class="notes">
-            <p>
-              Then governments started bending the lines. As you can see, China
-              is wide enough for five zones but uses only one. India is offset
-              with UTC by half an hour. Nepal by forty-five minutes. And if you
-              look at Spain, it sits on the same meridian as Britain but it
-              reads its clocks an hour ahead, because they shifted to Central
-              European Time during the Franco era and never moved back.
-            </p>
-            <p>
-              Time zones look like geography, but they're really political
-              decisions.
-            </p>
+            <ul>
+              <li>Then governments started bending the lines</li>
+              <li>China: wide enough for 5 zones, uses only 1</li>
+              <li>India offset by half an hour, Nepal by forty-five minutes</li>
+              <li>
+                Spain: same meridian as Britain, but an hour ahead, shifted to
+                CET in the Franco era, never moved back
+              </li>
+              <li>
+                Time zones look like geography, really political decisions
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie moment">
           <p>We traded astronomical accuracy<br />for human convenience.</p>
           <aside class="notes">
-            <p>
-              That's the trade we made. The Sun stopped telling us the time when
-              the trains did, and then governments did. We decided it was worth
-              it, because the alternative was unreadable timetables back then.
-              And today, the coordination between people across the world would
-              be unbearable.
-            </p>
+            <ul>
+              <li>That's the trade we made</li>
+              <li>
+                Sun stopped telling the time when trains did, then governments
+                did
+              </li>
+              <li>Worth it: the alternative was unreadable timetables</li>
+              <li>Today, world-wide coordination would be unbearable</li>
+            </ul>
           </aside>
         </section>
         <section class="lie moment">
           <p>The IANA database is the receipt.</p>
           <p><small>600+ zones &middot; updated several times a year</small></p>
           <aside class="notes">
-            <p>Back to time zones.</p>
-            <p>
-              We store all the crazy timezone shenanigans in the IANA time zone
-              database. More than 600 zones, updated several times a year,
-              because somewhere in the world a government keeps deciding to do
-              something different.
-            </p>
-            <p>In Ruby it's available through the <code>tzinfo</code> gem.</p>
+            <ul>
+              <li>Back to time zones</li>
+              <li>We store the crazy shenanigans in the IANA database</li>
+              <li>600+ zones, updated several times a year</li>
+              <li>Some government keeps deciding to do something different</li>
+              <li>In Ruby: the <code>tzinfo</code> gem</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -450,24 +447,24 @@
             </div>
           </div>
           <aside class="notes">
-            <p>
-              But as everything in computing, you need to keep your dependencies
-              up-to-date.
-            </p>
-            <p>
-              Did you know that Paraguay observed DST until late 2024 and then
-              abolished it?
-            </p>
+            <ul>
+              <li>
+                Like everything in computing: keep dependencies up-to-date
+              </li>
+              <li>
+                Paraguay observed DST until late 2024, then abolished it
+              </li>
+            </ul>
             <hr>
-            <p>
-              With the same code, you can have two different answers, depending
-              on whether your <code>tzinfo</code> gem is recent enough to know
-              about the time zone change.
-            </p>
-            <p>
-              If it is out of date, your app is following time zone rules that
-              no longer apply.
-            </p>
+            <ul>
+              <li>
+                Same code, two different answers, depends if
+                <code>tzinfo</code> is recent enough to know the change
+              </li>
+              <li>
+                Out of date → app follows time zone rules that no longer apply
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="truth moment">
@@ -477,37 +474,41 @@
             Keep tzinfo current.
           </p>
           <aside class="notes">
-            <p>
-              You might need to store the time zone of your users. Not the one
-              that comes from Rails it has its own way to refer to time zones
-              with sometimes more friendly names, but they can change and they
-              don't work outside of Rails. So, if you need to, it's better to
-              store the IANA name of the zone.
-            </p>
-            <p>
-              The name itself isn't frozen either. IANA keeps the old names
-              working through backward-compatibility links, so a value you
-              stored years ago keeps resolving.
-            </p>
-            <p>
-              And we do need to store it. Our reminder fires at 7am wherever the
-              user is, so we have to know which zone they read 7am in. Local
-              time isn't tied to your coordinates on Earth, it's tied to which
-              administration you're under.
-            </p>
+            <ul>
+              <li>You might need to store your users' time zone</li>
+              <li>
+                Not Rails' own names: friendlier, but can change, don't work
+                outside Rails
+              </li>
+              <li>Better to store the IANA name of the zone</li>
+              <li>
+                Name isn't frozen either, IANA keeps old names working via
+                backward-compatibility links
+              </li>
+              <li>
+                We do need it: reminder fires at 7am wherever the user is, must
+                know which zone they read 7am in
+              </li>
+              <li>
+                Local time isn't tied to your coordinates, tied to which
+                administration you're under
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 3</span>
           <h3><code>Time</code> is the same everywhere it runs</h3>
           <aside class="notes">
-            <p>
-              Lie number three. There are two methods from the class
-              <code>Time</code> that we reach for constantly:
-              <code> Time dot now </code> , to get the current time, and
-              <code> Time dot parse </code> , to read a string. From their
-              names, both look like they would be very predictable and reliable.
-            </p>
+            <ul>
+              <li>Lie number three</li>
+              <li>
+                Two <code>Time</code> methods we reach for constantly:
+                <code>Time dot now</code> (current time),
+                <code>Time dot parse</code> (read a string)
+              </li>
+              <li>Both names look predictable and reliable</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -521,16 +522,17 @@
             Time.current.to_date  # => 2026-06-24
           </code></pre>
           <aside class="notes">
-            <p>
-              My configuration says UTC, but <code> Time.now </code> ignores it.
-              <code> Time.now </code>reads the system clock and the system zone,
-              it doesn't look at your application config.
-            </p>
-            <p>
-              So when using the method <code>to_date</code> on them to get the
-              associated date, you get different ones, coming from the same
-              instant.
-            </p>
+            <ul>
+              <li>My config says UTC, but <code>Time.now</code> ignores it</li>
+              <li>
+                <code>Time.now</code> reads the system clock + system zone, not
+                your app config
+              </li>
+              <li>
+                <code>to_date</code> on each → different dates from the same
+                instant
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -539,16 +541,17 @@
             # => 2026-07-24 09:00:00 +0200
           </code></pre>
           <aside class="notes">
-            <p>
-              Here as well, there is no <code>+2</code> time zone component in
-              the input. It came from my laptop. If I deploy this code to a
-              server in another zone, it returns a different value for the same
-              string.
-            </p>
-            <p>
-              But hopefully, once again we have a nice workaround in
-              ActiveSupport.
-            </p>
+            <ul>
+              <li>
+                No <code>+2</code> zone component in the input, it came from my
+                laptop
+              </li>
+              <li>
+                Deploy to a server in another zone → different value for the
+                same string
+              </li>
+              <li>Hopefully, a nice workaround in ActiveSupport again</li>
+            </ul>
           </aside>
         </section>
         <section class="truth moment mapping">
@@ -571,30 +574,31 @@
             </p>
           </div>
           <aside class="notes">
-            <p>
-              It's the same fix for both. <code> Time.current </code> and
-              <code>Time.zone.parse</code> will fall back to the zone
-              <em>your application</em> declared.
-            </p>
-            <p>
-              And that's it for this one, just remember to use
-              <code>Time.current</code> and <code>zone</code>.
-            </p>
-            <p>
-              If you're just with standard Ruby, <code> Time.now.utc </code> is
-              a great default too.
-            </p>
+            <ul>
+              <li>Same fix for both</li>
+              <li>
+                <code>Time.current</code> and <code>Time.zone.parse</code> fall
+                back to the zone <em>your app</em> declared
+              </li>
+              <li>
+                That's it: use <code>Time.current</code> and
+                <code>zone</code>
+              </li>
+              <li>
+                Standard Ruby? <code>Time.now.utc</code> is a great default too
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 4</span>
           <h3>1:30 AM happens once</h3>
           <aside class="notes">
-            <p>
-              Lie number four. We talked about daylight saving time already. But
-              there's one more side effect to it that your code is not going to
-              like.
-            </p>
+            <ul>
+              <li>Lie number four</li>
+              <li>Already talked about daylight saving time</li>
+              <li>One more side effect your code is not going to like</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -606,12 +610,11 @@
             "
           />
           <aside class="notes">
-            <p>
-              Most countries that observe daylight saving move the clocks by
-              one hour, twice a year. We've already noticed that when the clocks
-              go back, the day is 25 hours long. Let's see what happens when
-              they move forward.
-            </p>
+            <ul>
+              <li>Most DST countries move the clocks one hour, twice a year</li>
+              <li>Clocks go back → the day is 25 hours long</li>
+              <li>Let's see what happens when they move forward</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -621,10 +624,12 @@
             tz.local_time(2026, 3, 29, 1, 30, 0)
           </code></pre>
           <aside class="notes">
-            <p>
-              I'm going to ask the UK zone for a <code>Time</code> at 1:30
-              AM on March 29.
-            </p>
+            <ul>
+              <li>
+                Ask the UK zone for a <code>Time</code> at 1:30 AM on
+                March 29
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -633,12 +638,17 @@
             # => TZInfo::PeriodNotFound
           </code></pre>
           <aside class="notes">
-            <p>
-              That time never happened in the UK. When the time move forward,
-              the clock jumps straight over it, so there is no UK instant to
-              return. If you have such a time-and-zone stored somewhere, then
-              you've stored something that never existed. And the code raises.
-            </p>
+            <ul>
+              <li>That time never happened in the UK</li>
+              <li>
+                Clock jumps straight over it → no UK instant to return
+              </li>
+              <li>
+                If you stored such a time-and-zone, you stored something that
+                never existed
+              </li>
+              <li>And the code raises</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -647,12 +657,14 @@
             # => TZInfo::AmbiguousTime
           </code></pre>
           <aside class="notes">
-            <p>Here is a second one, 6 months later.</p>
-            <p>
-              When the clocks go back, the same wall-clock time happens twice,
-              so the zone won't pick one for you. It asks which one you meant by
-              raising another exception.
-            </p>
+            <ul>
+              <li>A second one, 6 months later</li>
+              <li>Clocks go back → same wall-clock time happens twice</li>
+              <li>
+                Zone won't pick one, raises another exception to ask which you
+                meant
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -666,16 +678,18 @@
             # => Sun, 25 Oct 2026 01:30:00 BST +01:00
           </code></pre>
           <aside class="notes">
-            <p>
-              What if we don't use TZinfo then?
-            </p>
-            <p>
-              Here are the same two inputs through
-              <code>Time.zone.parse</code>. The forward case that didn't exist,
-              and the back case that happened twice. Rails gives you a default
-              result for both, without raising, and without telling you it had
-              to choose.
-            </p>
+            <ul>
+              <li>What if we don't use TZInfo then?</li>
+              <li>
+                Same two inputs through <code>Time.zone.parse</code>, the
+                forward case that didn't exist, the back case that happened
+                twice
+              </li>
+              <li>
+                Rails gives a default for both, no raise, no telling you it
+                chose
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie moment">
@@ -685,11 +699,14 @@
             <code>Time.zone.parse</code> resolves silently.
           </p>
           <aside class="notes">
-            <p>
-              The two APIs handle this differently. TZInfo will raise when
-              facing an issue, while <code> Time dot zone dot parse </code>
-              takes the same input, picks one, and returns it with no warning.
-            </p>
+            <ul>
+              <li>The two APIs handle this differently</li>
+              <li>TZInfo raises when facing an issue</li>
+              <li>
+                <code>Time dot zone dot parse</code> takes the same input,
+                picks one, returns it, no warning
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="truth">
@@ -702,33 +719,35 @@
             />
           </p>
           <aside class="notes">
-            <p>
-              This is an edge case. Most apps will never hit it, and you don't
-              need to defend every call against it. But it's real, and it
-              happens twice a year.
-            </p>
-            <p>
-              Our reminder mostly avoids this, unless the user picks a time
-              right in the gap, like 1:30 in the morning. That's rare, but it
-              can happen.
-            </p>
-            <p>
-              When you do need to handle a user's wall-clock time, I suggest
-              using TZInfo directly to avoid silent surprises.
-            </p>
+            <ul>
+              <li>An edge case, most apps never hit it</li>
+              <li>No need to defend every call against it</li>
+              <li>But it's real, and happens twice a year</li>
+              <li>
+                Our reminder mostly avoids it, unless the user picks a time in
+                the gap, like 1:30 in the morning
+              </li>
+              <li>Rare, but can happen</li>
+              <li>
+                Need a user's wall-clock time? use TZInfo directly to avoid
+                silent surprises
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 5</span>
           <h3>JSON and databases preserve your time</h3>
           <aside class="notes">
-            <p>
-              Lie number five. You did the work in Ruby. You used
-              <code>Time dot zone </code> , you handled DST, all your tests
-              pass. Now you need to send it somewhere, a JSON response or store
-              it in a database column. That's where you can lose what you just
-              built.
-            </p>
+            <ul>
+              <li>Lie number five</li>
+              <li>
+                You did the work in Ruby: <code>Time dot zone</code>, handled
+                DST, tests pass
+              </li>
+              <li>Now send it: a JSON response or a database column</li>
+              <li>That's where you can lose what you just built</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -739,11 +758,13 @@
             Time.zone.parse(str).to_json
           </code></pre>
           <aside class="notes">
-            <p>
-              At this point you might feel safe. You didn't forget to use the
-              <code>zone</code>, good for you, the string includes the offset,
-              and this date is nowhere near the tricky ones we've seen so far.
-            </p>
+            <ul>
+              <li>You might feel safe</li>
+              <li>
+                Used <code>zone</code>, string includes the offset, date nowhere
+                near the tricky ones
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -756,42 +777,44 @@
             # => "2026-06-25T08:00:00.000Z"
           </code></pre>
           <aside class="notes">
-            <p>
-              And yes, nothing broke, nothing raised, you got a valid JSON
-              string for a valid time.
-            </p>
-            <p>
-              We moved from 9 o'clock to 8 o'clock, but that's just the UTC
-              conversion.
-            </p>
-            <p>
-              What we actually lost is the offset. The string had
-              <code>+01:00</code>, and the JSON doesn't. So we lost some of the
-              context. And even this context was not complete because UTC+1 can
-              be Brighton in summer or it can be Lagos, it is just an offset and
-              not a full time zone.
-            </p>
-            <p>
-              If the consumer needs the user's civil time, the IANA name has to
-              travel separately, in its own field.
-            </p>
+            <ul>
+              <li>
+                Nothing broke, nothing raised, valid JSON for a valid time
+              </li>
+              <li>9 → 8 o'clock, but that's just the UTC conversion</li>
+              <li>
+                What we lost is the offset: string had <code>+01:00</code>, the
+                JSON doesn't
+              </li>
+              <li>
+                And even that was incomplete: UTC+1 is Brighton in summer or
+                Lagos; just an offset, not a full zone
+              </li>
+              <li>
+                Consumer needs civil time? the IANA name travels separately, its
+                own field
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="truth moment">
           <span class="chip">Truth &#8470; 5</span>
           <p>Outside Ruby objects, don't forget the zone.</p>
           <aside class="notes">
-            <p>
-              Once you leave Ruby for serialization or storage, remember the
-              zone won't follow you. If you need it, make sure to include it.
-            </p>
-            <p>
-              It comes down to what you're carrying. If it's an instant, a real
-              moment in time, then UTC is enough and the zone is just for
-              display. But if you're carrying an intent, a local time that's
-              meant to stay local, like our alarm at 7am, then the zone is part
-              of the meaning, and you have to keep it.
-            </p>
+            <ul>
+              <li>
+                Leave Ruby for serialization or storage → the zone won't follow
+              </li>
+              <li>If you need it, include it</li>
+              <li>Comes down to what you're carrying:</li>
+              <li>
+                Instant (a real moment) → UTC is enough, zone just for display
+              </li>
+              <li>
+                Intent (a local time meant to stay local, like our 7am alarm) →
+                zone is part of the meaning, keep it
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="truth">
@@ -800,38 +823,41 @@
           <p>MySQL <code>DATETIME</code> &middot; ignores the zone</p>
           <p>SQLite &middot; no datetime type at all</p>
           <aside class="notes">
-            <p>
-              Most of the storage systems we use won't make it easy for us.
-            </p>
-            <p>
-              The biggest trap is PostgreSQL's <code>timestamptz</code>. The
-              name reads like it carries a zone, but it doesn't. The value gets
-              normalised to UTC on the way in, and comes back in the session's
-              time zone.
-            </p>
-            <p>
-              MySQL has <code>DATETIME</code> that ignores zones entirely.
-            </p>
-            <p>
-              And SQLite doesn't even have a datetime type.
-            </p>
-            <p>
-              If the zone matters to your domain, you need to store it next to
-              the instant, with the IANA name in its own column.
-            </p>
+            <ul>
+              <li>Most storage systems won't make it easy for us</li>
+              <li>
+                Biggest trap: PostgreSQL <code>timestamptz</code>, name reads
+                like it carries a zone, but doesn't
+              </li>
+              <li>
+                Normalised to UTC on the way in, comes back in session's zone
+              </li>
+              <li>MySQL <code>DATETIME</code> ignores zones entirely</li>
+              <li>SQLite doesn't even have a datetime type</li>
+              <li>
+                Zone matters to your domain? store it next to the instant, IANA
+                name in its own column
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
           <span class="chip">Lie &#8470; 6</span>
           <h3>Noon is when the Sun is highest</h3>
           <aside class="notes">
-            <p>
-              Lie number six. Until now our reminder fired at 7am, a number the
-              user gave us. But some reminders don't work that way. What if what
-              the user really wants is to be notified at mid-day? Easy, that's
-              noon, right? No, the user meant mid-day, when the Sun reaches its
-              highest point in the sky. And that's almost never at 12 o'clock.
-            </p>
+            <ul>
+              <li>Lie number six</li>
+              <li>
+                Until now the reminder fired at 7am, a number the user gave
+              </li>
+              <li>
+                Some reminders don't work that way, what if they want mid-day?
+              </li>
+              <li>
+                Easy, that's noon? No, mid-day = Sun at its highest point
+              </li>
+              <li>And that's almost never at 12 o'clock</li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -841,22 +867,22 @@
             Nov 3 &middot; <code>11:44</code>
           </p>
           <aside class="notes">
-            <p>
-              On February 11, in Brighton, the Sun reaches its highest point at
-              12:15. On November 3, it gets there at 11:44. That's half an hour
-              apart, depending only on the day of the year.
-            </p>
-            <p>
-              This is called the equation of time and it exists because the
-              Earth's orbit is not a perfect circle, and because its axis is
-              tilted. In short it means the Sun runs a bit fast for part of the
-              year and a bit slow for the rest.
-            </p>
-            <p>
-              Clock time is an average, that's the "mean" in "mean solar time".
-              It lines up close enough with the real Sun, but it's a human
-              construction, not what actually happening up there.
-            </p>
+            <ul>
+              <li>Brighton: Feb 11 Sun highest at 12:15; Nov 3 at 11:44</li>
+              <li>Half an hour apart, depending only on the day of the year</li>
+              <li>Called the equation of time</li>
+              <li>
+                Earth's orbit isn't a perfect circle + its axis is tilted
+              </li>
+              <li>Sun runs a bit fast part of the year, a bit slow the rest</li>
+              <li>
+                Clock time is an average, the "mean" in "mean solar time"
+              </li>
+              <li>
+                Close enough, but a human construction, not what's actually up
+                there
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="lie">
@@ -868,19 +894,21 @@
           </p>
           <p>One year of solar noons.</p>
           <aside class="notes">
-            <p>
-              If you photograph the Sun at the same clock time every day for a
-              year, you don't get a single dot, you get this: a figure-8 called
-              an analemma. All these dots show the many times the clock and the
-              Sun disagreed. And the Sun is exactly where it should be on every
-              one of them. It's the clock that's averaging, pretending time is
-              regular.
-            </p>
-            <p>
-              I know this is not code but I think it's good to know that a lot
-              of the weird stuff we have to deal with related to time is just a
-              reflection of nature's chaotic and beautiful side.
-            </p>
+            <ul>
+              <li>
+                Photograph the Sun at the same clock time every day for a year
+              </li>
+              <li>Not a single dot, a figure-8 called an analemma</li>
+              <li>All the times the clock and the Sun disagreed</li>
+              <li>
+                Sun is exactly where it should be on every one, the clock is
+                averaging, pretending time is regular
+              </li>
+              <li>
+                Not code, but: a lot of time weirdness is just nature's chaotic,
+                beautiful side
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="truth moment">
@@ -894,22 +922,26 @@
             />
           </p>
           <aside class="notes">
-            <p>
-              A little bit of shameless self-promotion: if you want to deal with
-              astronomical wonders in Ruby, check the <code>Astronoby</code>
-              Ruby gem that I maintain with a lot of love and passion for the
-              Ruby community.
-            </p>
+            <ul>
+              <li>A little shameless self-promotion</li>
+              <li>
+                Want astronomical wonders in Ruby? check the
+                <code>Astronoby</code> gem
+              </li>
+              <li>
+                I maintain it with love and passion for the Ruby community
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit">
           <p>Back to the reminder.</p>
           <aside class="notes">
-            <p>
-              Notify the user at 7am, wherever they are. We've spent six lies
-              watching that one notification possibly break. Let's try to build
-              it correctly.
-            </p>
+            <ul>
+              <li>Notify the user at 7am, wherever they are</li>
+              <li>Six lies watching that one notification possibly break</li>
+              <li>Let's try to build it correctly</li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit toolkit--bad">
@@ -918,15 +950,19 @@
           t.datetime :next_reminder_at
           </code></pre>
           <aside class="notes">
-            <p>
-              The trap is making the computed time the thing you go-back-to when
-              you need the answer. If the user moves country or DST shifts, then
-              the value you stored is wrong, with nothing telling you it is.
-            </p>
-            <p>
-              It's not wrong to store a computed time but it is important to
-              remember the intention.
-            </p>
+            <ul>
+              <li>
+                Trap: making the computed time the thing you go-back-to for the
+                answer
+              </li>
+              <li>
+                User moves country or DST shifts → stored value is wrong,
+                nothing tells you
+              </li>
+              <li>
+                Not wrong to store a computed time, but remember the intention
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit toolkit--good">
@@ -936,25 +972,27 @@
           t.string :time_zone
           </code></pre>
           <aside class="notes">
-            <p>
-              The truth is the inputs that produce the answer. The local time
-              the user asked for, and which zone they read it in. We compute the
-              next fire time when we actually need it.
-            </p>
+            <ul>
+              <li>The truth is the inputs that produce the answer</li>
+              <li>The local time asked for + which zone they read it in</li>
+              <li>Compute the next fire time when we actually need it</li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit moment">
           <p>Store the question.</p>
           <p>Compute the answer.</p>
           <aside class="notes">
-            <p>
-              For a recurring reminder or a delayed notification, store the
-              parameters and compute the result when you need it.
-            </p>
-            <p>
-              If the user's context changes, it means the parameters are
-              updated, and the computed time will stay relevant.
-            </p>
+            <ul>
+              <li>
+                Recurring reminder or delayed notification: store the
+                parameters, compute the result when you need it
+              </li>
+              <li>
+                Context changes → update the parameters, computed time stays
+                relevant
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit toolkit--code">
@@ -971,29 +1009,24 @@
           end
           </code></pre>
           <aside class="notes">
-            <p>
-              Let's see how it could look like.
-            </p>
-            <p>
-              We get the zone from its IANA name.
-            </p>
-            <p>
-              <code> Time dot now dot utc </code>is the current moment. The zone
-              turns it into a local date, and we add one calendar day. That's
-              the accurate definition of tomorrow, where the user lives.
-            </p>
-            <p>
-              Then <code>local_time</code> method builds the instant the user
-              asked for, 7am of their time.
-            </p>
-            <p>
-              If we want to be super cautious, we could also add some error
-              handling for the DST edge cases, because that's where it could
-              raise with ambiguous times.
-            </p>
-            <p>
-              And that's just it.
-            </p>
+            <ul>
+              <li>Let's see how it could look</li>
+              <li>Get the zone from its IANA name</li>
+              <li><code>Time dot now dot utc</code> is the current moment</li>
+              <li>
+                Zone turns it into a local date, add one calendar day → accurate
+                "tomorrow" where the user lives
+              </li>
+              <li>
+                <code>local_time</code> builds the instant they asked for, 7am
+                their time
+              </li>
+              <li>
+                Super cautious? add error handling for DST edge cases (where it
+                raises on ambiguous times)
+              </li>
+              <li>And that's just it</li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit">
@@ -1003,22 +1036,28 @@
           <p><code>10:23 Asia/Riyadh</code></p>
           <p class="fragment pick"><code>10:23 Asia/Riyadh (UTC+3)</code></p>
           <aside class="notes">
-            <p>
-              One more thing, if you want to display a time, there are multiple
-              ways. The UTC offset does the job most of the time, but it can be
-              ambiguous. Time zone acronyms are short, but AST is both Arabia
-              Standard Time and Atlantic Standard Time, and those are seven
-              hours apart. IANA names are absolute, but who actually remembers
-              the zone names?
-            </p>
+            <ul>
+              <li>One more thing: displaying a time, multiple ways</li>
+              <li>UTC offset works most of the time, but can be ambiguous</li>
+              <li>
+                Acronyms are short, but AST = Arabia Standard or Atlantic
+                Standard, seven hours apart
+              </li>
+              <li>
+                IANA names are absolute, but who remembers the zone names?
+              </li>
+            </ul>
             <hr>
-            <p>
-              If you want absolute precision, then you can combine them. The
-              zone name tells you which zone it is, the offset lets you do the
-              maths. I know it looks overkill, but if your app crosses zones, or
-              if like me you like accuracy and precision, this is a very
-              effective format.
-            </p>
+            <ul>
+              <li>Want absolute precision? combine them</li>
+              <li>
+                Zone name tells you which zone, offset lets you do the maths
+              </li>
+              <li>
+                Looks overkill, but if your app crosses zones, or you like
+                accuracy, very effective
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit moment">
@@ -1028,12 +1067,15 @@
           <p>Is this a recurring intention?</p>
           <p>Who owns the zone?</p>
           <aside class="notes">
-            <p>
-              When dealing with time, I encourage you to ask yourself the right
-              questions first. Name what you have before you pick a method. The
-              same datetime column can mean an instant, a clock time, or a
-              recurring intention, and each one wants a different tool.
-            </p>
+            <ul>
+              <li>When dealing with time, ask the right questions first</li>
+              <li>Name what you have before you pick a method</li>
+              <li>
+                Same datetime column can mean an instant, a clock time, or a
+                recurring intention
+              </li>
+              <li>Each one wants a different tool</li>
+            </ul>
           </aside>
         </section>
         <section class="toolkit toolkit--checklist">
@@ -1079,13 +1121,16 @@
             </tr>
           </table>
           <aside class="notes">
-            <p>
-              I came up with this checklist to summarise the key points. If
-              you're an experienced developer you probably already use most of
-              these because they became best practices. There are no actual
-              conspiracy theories in this presentation, but I just wanted to
-              remind us why caution is necessary when dealing with time.
-            </p>
+            <ul>
+              <li>This checklist summarises the key points</li>
+              <li>
+                Experienced devs already use most, they became best practices
+              </li>
+              <li>
+                No actual conspiracy theories here, just a reminder why caution
+                matters with time
+              </li>
+            </ul>
           </aside>
         </section>
         <section class="epilogue recap">
@@ -1097,19 +1142,23 @@
             Even the Sun and the Moon don't always rise.
           </p>
           <aside class="notes">
-            <p>
-              Now you know, a day is not always 24 hours, dates don't always
-              follow each other, and time zones don't sit still.
-            </p>
+            <ul>
+              <li>Now you know: a day is not always 24 hours</li>
+              <li>Dates don't always follow each other</li>
+              <li>Time zones don't sit still</li>
+            </ul>
             <hr>
-            <p>
-              Weirdly enough, even the Sun and the Moon don't always rise. If
-              you live in the North of Norway or in Antarctica, there are days
-              without sun at all. And because the Moon's rising time drifts
-              about fifty minutes every day, there are some local 24-hour
-              windows that just don't contain a moonrise.
-            </p>
-            <p>Never trust your instincts about time.</p>
+            <ul>
+              <li>Even the Sun and the Moon don't always rise</li>
+              <li>
+                North of Norway or Antarctica → days without sun at all
+              </li>
+              <li>
+                Moon's rising drifts ~50 minutes a day → some 24-hour windows
+                have no moonrise
+              </li>
+              <li>Never trust your instincts about time</li>
+            </ul>
           </aside>
         </section>
         <section class="epilogue sky-return">
@@ -1121,15 +1170,16 @@
             </p>
           </div>
           <aside class="notes">
-            <p>
-              We started with the sky as the only clock. Everything after that,
-              the calendar, the 24-hour day, time zones, time on your phone,
-              we built on top of it so time would be easy to store and compare.
-              Those are the abstractions that bend the truth.
-            </p>
-            <p>
-              Time is not so complicated, but our world is.
-            </p>
+            <ul>
+              <li>We started with the sky as the only clock</li>
+              <li>
+                Everything after was built on top: calendar, 24-hour day, time
+                zones, time on your phone
+              </li>
+              <li>So time would be easy to store and compare</li>
+              <li>Those are the abstractions that bend the truth</li>
+              <li>Time is not so complicated, but our world is</li>
+            </ul>
           </aside>
         </section>
         <section
@@ -1176,8 +1226,10 @@
             </li>
           </ul>
           <aside class="notes">
-            <p>And I think it's about time now.</p>
-            <p>Thank you.</p>
+            <ul>
+              <li>And I think it's about time now</li>
+              <li>Thank you</li>
+            </ul>
           </aside>
         </section>
       </div>
